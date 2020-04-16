@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse, quietly = TRUE)
+my_theme <- theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ```
 
 ```{r data, include=FALSE}
@@ -30,10 +31,33 @@ pH_carbonate_percent <- pH_carbonate %>%
   mutate(percent_carbonate = mg_IC_g_soil_zero/1000*(mw_carbonate/mw_c)*100)
 ggplot(data = pH_carbonate_percent, aes(percent_carbonate, pH, color = horizon)) + 
   geom_point(shape = 21, size = 2) +
-  theme_bw() +
-  labs(x = "CaCO3 (g/100g soil)", y = "pH")
+  labs(x = "CaCO3 (g/100g soil)", y = "pH") +
+  my_theme
 ```
 ```{r size fractions}
+# calculate fraction amount in g, relative amount and recovery
+# silt and clay pan weight were added in excel to avoid NA's
+size_fractions_calculated_values <- size_fractions %>% 
+  mutate(coarse_fraction_g = sand_and_POM_and_pan_weight_g - sand_pom_pan_weight_g,
+         fine_fraction_g = total_sc_and_pan_g - total_sc_pan_g,
+         recovery_percent = (coarse_fraction_g + fine_fraction_g) / soil_weight_g * 100,
+         relative_coarse_fraction = coarse_fraction_g / soil_weight_g,
+         relative_fine_fraction = fine_fraction_g / soil_weight_g)
+ggplot(data = size_fractions_calculated_values) + 
+  geom_line(aes(relative_coarse_fraction, relative_fine_fraction)) + 
+  my_theme
 
+```
+```{r HH extraction}
+# calculate concentrations of HH-extractable C, Fe and Al per g soil
+HH_volume <- 0.01 # extracting solution was 10 mL
+HH_dilution <- 10 # all ICP samples diluted 1:9
+HH_calculated_values <- HH_extraction_raw_data %>%
+  mutate(HH_DOC_ppm = npoc_ppm * toc_dilution,
+         HH_DOC_mg_g = HH_DOC_ppm * HH_volume / soil_weight_g,
+         Fe_mg_g = Fe_ppm * HH_dilution * HH_volume / soil_weight_g,
+         Al_mg_g = Al_ppm * HH_dilution * HH_volume / soil_weight_g,
+         Fe_plus_Al = Fe_mg_g + Al_mg_g)
+ggplot(data = HH_calculated_values, aes(Fe_plus_Al, HH_DOC_mg_g)) + geom_point()
 ```
 
