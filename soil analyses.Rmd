@@ -1,0 +1,39 @@
+---
+title: "Soil analyses"
+author: "Itamar Shabtai"
+date: "4/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse, quietly = TRUE)
+```
+
+```{r data, include=FALSE}
+pH_carbonate <- read_csv("Data/pH and carbonate/pH_carbonate_data_summary_final.csv", col_types = cols(horizon = col_factor(levels = c("a","c","o"))))
+size_fractions <- read_csv("Data/Size fractions/size_fractions_raw_data.csv", col_types = cols(horizon = col_factor(levels = c("a","c", "e"))))
+moisture <- read_csv("Data/Moisture/soil_moisture_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+TOC_final_summary <- read_csv("Data/Microbial biomass/TOC_final_summary.csv", col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+HH_extraction <- read_csv("Data/HH extraction/HH_extraction_raw_data.csv")
+bulk_soil_CN_isotopes <- read_csv("Data/Elemental and isotopes/bulk_soil_CN_natu_abund_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","c","e"))))
+```
+
+## soil pH and carbonates
+
+```{r pH and carbonate}
+# all negative inorganic C assumed equal to zero
+# convert inorganic C content to %carbonate in soils
+mw_carbonate <- 100.0869 # molar mass of calcium carbonate
+mw_c <- 12.0107 # molar mass of C
+pH_carbonate_percent <- pH_carbonate %>% 
+  mutate(percent_carbonate = mg_IC_g_soil_zero/1000*(mw_carbonate/mw_c)*100)
+ggplot(data = pH_carbonate_percent, aes(percent_carbonate, pH, color = horizon)) + 
+  geom_point(shape = 21, size = 2) +
+  theme_bw() +
+  labs(x = "CaCO3 (g/100g soil)", y = "pH")
+```
+```{r size fractions}
+
+```
+
