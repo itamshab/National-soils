@@ -215,34 +215,34 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 3,72,2,c,1,2-C-Db-1,Whitlam Woods,n,155.16,6.7,5.8,124.8,126.8
 3,72,2,c,2,2-C-Db-3,Whitlam Woods,n,161.97,6.7,5.8,130.6,132.5
 3,72,2,c,3,2-C-Db-2,Whitlam Woods,n,177.07,6.7,5.8,143.7,146.2
-6,73,3,c,1,3-C-Db-1,Punderson Park,n,,,,,
+6,73,3,c,1,3-C-Db-1,Punderson Park,n,26.76,28.833,0,51.436,
 6,73,3,c,2,3-C-Db-2,Punderson Park,n,,,,,
 6,73,3,c,3,3-C-Db-3,Punderson Park,n,,,,,
 9,74,4,c,1,4-C-Db-2,Potato Creek,n,163.23,6.7,5.8,137.6,138.8
 9,74,4,c,2,4-C-Db-1,Potato Creek,n,167.67,6.7,5.8,143.9,146
 9,74,4,c,3,4-C-Db-3,Potato Creek,n,177.25,6.7,5.8,151.4,153.2
-12,75,5,c,1,5-C-Db-1,Shoe Factory Rd,n,,,,,
+12,75,5,c,1,5-C-Db-1,Shoe Factory Rd,n,26.76,28.833,0,51.436,
 12,75,5,c,2,5-C-Db-2,Shoe Factory Rd,n,,,,,
 12,75,5,c,3,5-C-Db-3,Shoe Factory Rd,n,,,,,
-15,76,6,c,1,6-C-Db-1,Pecatonica,n,,,,,
+15,76,6,c,1,6-C-Db-1,Pecatonica,n,15.192,27.971,0,40.66,
 15,76,6,c,2,6-C-Db-2,Pecatonica,n,,,,,
 15,76,6,c,3,6-C-Db-3,Pecatonica,n,,,,,
 19,77,7,c,1,7-C-Db-2,Black River Falls,n,158,6.7,5.8,137.3,137.8
 19,77,7,c,2,7-C-Db-1,Black River Falls,n,173.1,6.7,5.8,149.5,150
 19,77,7,c,3,7-C-Db-3,Black River Falls,n,174.8,6.7,5.8,152.8,153.3
-22,78,8,c,1,8-C-Db-1,Fox Coulee,n,,,,,
+22,78,8,c,1,8-C-Db-1,Fox Coulee,n,18.727,27.824,0,43.797,
 22,78,8,c,2,8-C-Db-2,Fox Coulee,n,,,,,
 22,78,8,c,3,8-C-Db-3,Fox Coulee,n,,,,,
-25,79,9,c,1,9-C-Db-1,Great Bluffs,n,,,,,
+25,79,9,c,1,9-C-Db-1,Great Bluffs,n,16.621,28.164,0,42.377,
 25,79,9,c,2,9-C-Db-2,Great Bluffs,n,,,,,
 25,79,9,c,3,9-C-Db-3,Great Bluffs,n,,,,,
-30,80,11,c,1,11-C-Db-1,Good Soldier,n,,,,,
+30,80,11,c,1,11-C-Db-1,Good Soldier,n,12.072,28.451,0,37.206,
 30,80,11,c,2,11-C-Db-2,Good Soldier,n,,,,,
 30,80,11,c,3,11-C-Db-3,Good Soldier,n,,,,,
-33,81,12,c,1,12-C-Db-1,Cottonwood,n,,,,,
+33,81,12,c,1,12-C-Db-1,Cottonwood,n,21.691,27.856,0,46.889,
 33,81,12,c,2,12-C-Db-2,Cottonwood,n,,,,,
 33,81,12,c,3,12-C-Db-3,Cottonwood,n,,,,,
-38,82,14,c,1,14-C-Db-3,Spearfish,n,100.7,6.7,5.8,,
+38,82,14,c,1,14-C-Db-3,Spearfish,n,,,,98,
 38,82,14,c,2,14-C-Db-2,Spearfish,n,106.5,6.7,5.8,85.1,90.6
 38,82,14,c,3,14-C-Db-1,Spearfish,n,113.4,6.7,5.8,89.5,99.1
 41,83,15,c,1,15-C-Db-3,Twisted Cedar,n,45,6.7,5.8,40.4,41.5
@@ -251,22 +251,22 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 43,84,16,c,1,16-C-Db-1,Tensleep,n,112.5,6.7,5.8,102.4,104.4
 43,84,16,c,2,16-C-Db-3,Tensleep,n,120.4,6.7,5.8,111.3,113.8
 43,84,16,c,3,16-C-Db-2,Tensleep,n,126,6.7,5.8,116,118.8
-46,85,17,c,1,17-C2-Db-1,Grab Bag,n,,,,,
+46,85,17,c,1,17-C2-Db-1,Grab Bag,n,11.657,28.854,0,38.499,
 46,85,17,c,2,17-C2-Db-2,Grab Bag,n,,,,,
 46,85,17,c,3,17-C2-Db-3,Grab Bag,n,,,,,
 49,86,18,c,1,18-C-Db-1,Potosi,n,,,,,
-49,86,18,c,2,18-C-Db-2,Potosi,n,,,,,
+49,86,18,c,2,18-C-Db-2,Potosi,n,18.181,29.128,0,45.26,
 49,86,18,c,3,18-C-Db-3,Potosi,n,,,,,
 52,87,19,c,1,19-C-Db-1,Turah,n,,,,,
-52,87,19,c,2,19-C-Db-2,Turah,n,,,,,
+52,87,19,c,2,19-C-Db-2,Turah,n,14.581,28.761,0,41.497,
 52,87,19,c,3,19-C-Db-3,Turah,n,,,,,
-55,88,20,c,1,20-C-Db-1,Clearwater,n,,,,,
+55,88,20,c,1,20-C-Db-1,Clearwater,n,17.365,29.754,0,43.687,
 55,88,20,c,2,20-C-Db-2,Clearwater,n,,,,,
 55,88,20,c,3,20-C-Db-3,Clearwater,n,,,,,
-58,89,21,c,1,21-C-Db-1,Olympic,n,,,,,
+58,89,21,c,1,21-C-Db-1,Olympic,n,21.944,28.743,0,42.162,
 58,89,21,c,2,21-C-Db-2,Olympic,n,,,,,
 58,89,21,c,3,21-C-Db-3,Olympic,n,,,,,
-61,90,22,c,1,22-C-Db-1,Disappointment,n,,,,,
+61,90,22,c,1,22-C-Db-1,Disappointment,n,16.007,30.002,0,40.245,
 61,90,22,c,2,22-C-Db-2,Disappointment,n,,,,,
 61,90,22,c,3,22-C-Db-3,Disappointment,n,,,,,
 64,91,23,c,1,23-C-Db-3,Clatsop,n,87.4,6.7,5.8,54.9,56.7
@@ -275,28 +275,28 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 67,92,24,c,1,24-C-Db-2,Siuslaw,y,75.8,6.7,5.8,54.2,55.7
 67,92,24,c,2,24-C-Db-1,Siuslaw,y,88.7,6.7,5.8,65.8,67.7
 67,92,24,c,3,24-C-Db-3,Siuslaw,y,91.1,6.7,5.8,68.7,70.3
-70,93,25,c,1,25-C-Db-1,Alsea,n,,,,,
+70,93,25,c,1,25-C-Db-1,Alsea,n,13.215,48.852,0,58.398,
 70,93,25,c,2,25-C-Db-2,Alsea,n,,,,,
 70,93,25,c,3,25-C-Db-3,Alsea,n,,,,,
 75,94,27,c,1,27-C-Db-1,Shasta,n,107.9,6.7,5.8,94.4,96.1
 75,94,27,c,2,27-C-Db-2,Shasta,n,109,6.7,5.8,108.9,110.9
 75,94,27,c,3,27-C-Db-3,Shasta,n,125.3,6.7,5.8,90.3,92.4
-78,95,28,c,1,28-C-Db-1,El Dorado,n,,,,,
+78,95,28,c,1,28-C-Db-1,El Dorado,n,37.875,49.285,0,77.37,
 78,95,28,c,2,28-C-Db-2,El Dorado,n,,,,,
 78,95,28,c,3,28-C-Db-3,El Dorado,n,,,,,
-81,96,29,c,1,29-C-Db-1,Merklee,n,,,,,
+81,96,29,c,1,29-C-Db-1,Merklee,n,45.018,51.603,0,90.874,
 81,96,29,c,2,29-C-Db-2,Merklee,n,,,,,
 81,96,29,c,3,29-C-Db-3,Merklee,n,,,,,
 83,97,30,c,1,30-C-Db-1,Bishop,n,116.7,6.7,5.8,114.7,116
 83,97,30,c,2,30-C-Db-2,Bishop,n,123.5,6.7,5.8,121.5,122.9
 83,97,30,c,3,30-C-Db-3,Bishop,n,126.7,6.7,5.8,124.7,126.1
-86,98,31,c,1,31-C-Db-1,Death Valley,n,,,,,
+86,98,31,c,1,31-C-Db-1,Death Valley,n,15.081,28.025,0,42.431,
 86,98,31,c,2,31-C-Db-2,Death Valley,n,,,,,
 86,98,31,c,3,31-C-Db-3,Death Valley,n,,,,,
-89,99,32,c,1,32-C-Db-1,Flagstaff,n,,,,,
+89,99,32,c,1,32-C-Db-1,Flagstaff,n,17.164,27.733,0,43,
 89,99,32,c,2,32-C-Db-2,Flagstaff,n,,,,,
 89,99,32,c,3,32-C-Db-3,Flagstaff,n,,,,,
-92,100,33,c,1,33-C-Db-1,Jerome,n,,,,,
+92,100,33,c,1,33-C-Db-1,Jerome,n,26.419,28.503,0,52.793,
 92,100,33,c,2,33-C-Db-2,Jerome,n,,,,,
 92,100,33,c,3,33-C-Db-3,Jerome,n,,,,,
 95,101,34,c,1,34-C-Db-1,Tonto,n,68.2,6.7,5.8,65.9,66.4
@@ -323,16 +323,16 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 117,108,42,c,1,42-C-Db-3,Bonham,n,103.7,6.7,5.8,89.8,92.2
 117,108,42,c,2,42-C-Db-1,Bonham,n,115.5,6.7,5.8,100.6,103.2
 117,108,42,c,3,42-C-Db-2,Bonham,n,123.8,6.7,5.8,106.6,109.4
-120,109,43,c,1,43-C-Db-1,Gambil,n,,,,,
+120,109,43,c,1,43-C-Db-1,Gambil,n,14.334,27.518,0,39.036,
 120,109,43,c,2,43-C-Db-2,Gambil,n,,,,,
 120,109,43,c,3,43-C-Db-3,Gambil,n,,,,,
 123,110,44,c,1,44-C-DB2-3,Ouachita,n,110.5,6.7,5.8,91.4,92.2
 123,110,44,c,2,44-C-DB2-1,Ouachita,n,127.5,6.7,5.8,106,106.9
 123,110,44,c,3,44-C-DB2-2,Ouachita,n,136.2,6.7,5.8,113.5,114.7
-126,111,45,c,1,45-C-Db-1,Dagmar,n,,,,,
+126,111,45,c,1,45-C-Db-1,Dagmar,n,11.779,26.866,0,36.928,
 126,111,45,c,2,45-C-Db-2,Dagmar,n,,,,,
 126,111,45,c,3,45-C-Db-3,Dagmar,n,,,,,
-129,112,46,c,1,46-C-Db-1,Lewis,n,,,,,
+129,112,46,c,1,46-C-Db-1,Lewis,n,13.837,27.895,0,39.423,
 129,112,46,c,2,46-C-Db-2,Lewis,n,,,,,
 129,112,46,c,3,46-C-Db-3,Lewis,n,,,,,
 132,113,47,c,1,47-C-Db-3,Prentice,n,95.7,6.7,5.8,88,88.8
@@ -347,7 +347,7 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 141,116,50,c,1,50-C-Db-3,Monagahela,n,141.9,6.7,5.8,115.9,118.3
 141,116,50,c,2,50-C-Db-2,Monagahela,n,147.1,6.7,5.8,120.4,122.6
 141,116,50,c,3,50-C-Db-1,Monagahela,n,158.3,6.7,5.8,129.6,131.4
-144,117,51,c,1,51-C-Db-1,Finger Lakes,n,,,,,
+144,117,51,c,1,51-C-Db-1,Finger Lakes,n,14.83,28.217,0,40.62,
 144,117,51,c,2,51-C-Db-2,Finger Lakes,n,,,,,
 144,117,51,c,3,52-C-Db-3,Finger Lakes,n,,,,,
 147,118,52,c,1,52-C-Db-2,Waitsfield,n,120.8,6.7,5.8,87.9,88.6
@@ -359,12 +359,12 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 153,120,54,c,1,54-C-Db-3,Bangor,n,90.1,6.7,5.8,79.4,80.1
 153,120,54,c,2,54-C-Db-1,Bangor,n,104.9,6.7,5.8,91.4,92.2
 153,120,54,c,3,54-C-Db-2,Bangor,n,109,6.7,5.8,93.4,94.3
-156,121,55,c,1,55-C-Db-1,Aroostook,n,,,,,
+156,121,55,c,1,55-C-Db-1,Aroostook,n,15.947,26.831,0,40.42,
 156,121,55,c,2,55-C-Db-2,Aroostook,n,,,,,
 156,121,55,c,3,55-C-Db-3,Aroostook,n,,,,,
 158,122,56,c,1,56-C-Db-1,John Lusby,n,111.3,6.7,5.8,88.9,89.9
 158,122,56,c,2,56-C-Db-2,John Lusby,n,117.4,6.7,5.8,99.3,100
-161,123,57,c,1,57-C-Db-1,Halifax,n,,,,,
+161,123,57,c,1,57-C-Db-1,Halifax,n,19.591,28.823,0,41.528,
 161,123,57,c,2,57-C-Db-2,Halifax,n,,,,,
 161,123,57,c,3,57-C-Db-3,Halifax,n,,,,,
 165,124,58,c,1,58-C-Db-3,Kentville,n,153.8,6.7,5.8,133.9,134.9
@@ -387,7 +387,7 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 183,130,64,c,1,64-C-Db-2,Moscow,n,64,6.7,5.1,57.5,58.5
 183,130,64,c,2,64-C-Db-1,Moscow,n,75.9,6.7,5.1,66.8,67.9
 183,130,64,c,3,64-C-Db-3,Moscow,n,85.3,6.7,5.1,75.4,76.7
-190,131,67,c,1,67-C-Db-1,Wallowa,n,,,,,
+190,131,67,c,1,67-C-Db-1,Wallowa,n,19.081,29.042,0,45.306,
 190,131,67,c,2,67-C-Db-2,Wallowa,n,,,,,
 190,131,67,c,3,67-C-Db-3,Wallowa,n,,,,,
 ,132,68,c,1,68-C-Db-1,Ribdan,,,,,,
@@ -399,13 +399,13 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 ,134,71,c,1,71-C-Db-1,Slope mountain,,,,,,
 ,134,71,c,2,71-C-Db-2,Slope mountain,,,,,,
 ,134,71,c,3,71-C-Db-3,Slope mountain,,,,,,
-16,135,7,o,1,7-O-Db-1,Black River Falls,n,,,,,
+16,135,7,o,1,7-O-Db-1,Black River Falls,n,5.29,28.071,0,31.766,
 16,135,7,o,2,7-O-Db-2,Black River Falls,n,,,,,
 16,135,7,o,3,7-O-Db-3,Black River Falls,n,,,,,
 17,136,7,e,1,7-E-Db-1,Black River Falls,n,116.9,6.7,5.8,108.2,108.6
 17,136,7,e,2,7-E-Db-3,Black River Falls,n,120.7,6.7,5.8,106.1,106.8
 17,136,7,e,3,7-E-Db-2,Black River Falls,n,135.8,6.7,5.8,125,125.5
-162,137,57,e,1,57-E-Db-1,Halifax,n,,,,,
+162,137,57,e,1,57-E-Db-1,Halifax,n,14.627,27.762,0,40.173,
 162,137,57,e,2,57-E-Db-2,Halifax,n,,,,,
 162,137,57,e,3,57-E-Db-3,Halifax,n,,,,,
 2,138,2,b,1,2-B-Db-2,Whitlam Woods,n,150.09,6.7,5.8,119.4,120.7
@@ -420,7 +420,7 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 11,141,5,b,1,5-B-Db-3,Shoe Factory Rd,n,119.41,6.7,5.8,97.2,99.4
 11,141,5,b,2,5-B-Db-1,Shoe Factory Rd,n,124.35,6.7,5.8,99.5,102
 11,141,5,b,3,5-B-Db-2,Shoe Factory Rd,n,129.56,6.7,5.8,105.5,108.2
-14,142,6,b,1,6-B-Db-1,Pecatonica,n,,,,,
+14,142,6,b,1,6-B-Db-1,Pecatonica,n,15.192,27.985,0,40.66,
 14,142,6,b,2,6-B-Db-2,Pecatonica,n,,,,,
 14,142,6,b,3,6-B-Db-3,Pecatonica,n,,,,,
 18,143,7,b,1,7-B-Db-1,Black River Falls,n,161.1,6.7,5.8,143.4,144.1
@@ -449,7 +449,7 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 37,150,14,b,3,14-B-Db-1,Spearfish,n,126.6,6.7,5.8,116.9,117.6
 40,151,15,b,1,15-B-Db-3,Twisted Cedar,n,110.1,6.7,5.8,101.4,102.9
 40,151,15,b,2,15-B-Db-1,Twisted Cedar,n,123.7,6.7,5.8,109.4,111.2
-40,151,15,b,3,15-B-Db-2,Twisted Cedar,n,128.8,6.7,5.8,,
+40,151,15,b,3,15-B-Db-2,Twisted Cedar,n,128.8,6.7,5.8,117.6,
 45,152,17,b,1,17-C1-Db-1,Grab Bag,n,132.5,6.7,5.8,109.1,111
 45,152,17,b,2,17-C1-Db-3,Grab Bag,n,143.7,6.7,5.8,119.4,124.6
 45,152,17,b,3,17-C1-Db-2,Grab Bag,n,155.5,6.7,5.8,128.6,131.9
@@ -489,7 +489,7 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 80,164,29,b,1,29-B-Db-3,Merklee,n,110.5,6.7,5.8,90.9,95.3
 80,164,29,b,2,29-B-Db-2,Merklee,n,120,6.7,5.8,100.4,104.8
 80,164,29,b,3,29-B-Db-1,Merklee,n,136.8,6.7,5.8,110.2,115.9
-85,165,31,b,1,31-B-Db-1,Death Valley,n,,,,,
+85,165,31,b,1,31-B-Db-1,Death Valley,n,20.122,28.417,0,47.874,
 85,165,31,b,2,31-B-Db-2,Death Valley,n,,,,,
 85,165,31,b,3,31-B-Db-3,Death Valley,n,,,,,
 88,166,32,b,1,32-B-Db-1,Flagstaff,n,75,6.7,5.8,70.3,72.2
@@ -578,7 +578,7 @@ old_ID,unique_ID,pedon_ID,horizon,reps,sample_ID,location,rocky,bag_wet_soil,tin
 176,193,62,b,3,62-B-Db-1,Vermontville,n,100.9,6.7,6.1,80.3,81.4
 179,194,63,b,1,63-B-Db-2,Ohio,n,96.9,6.7,6.1,,
 179,194,63,b,2,63-B-Db-1,Ohio,n,98.1,6.7,6.1,75.3,76.4
-179,194,63,b,3,63-B-Db-3,Ohio,n,106.8,6.7,6.1,55.9,56.7
+179,194,63,b,3,63-B-Db-3,Ohio,n,106.8,6.7,6.1,,
 182,195,64,b,1,64-B-Db-1,Moscow,n,70.6,6.7,5.1,62.1,63.1
 182,195,64,b,2,64-B-Db-2,Moscow,n,82.7,6.7,5.1,73.7,74.9
 182,195,64,b,3,64-B-Db-3,Moscow,n,84,6.7,5.1,75.6,76.8
