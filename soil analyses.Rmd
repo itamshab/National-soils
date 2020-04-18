@@ -20,6 +20,7 @@ moisture <- read_csv("Data/Moisture/soil_moisture_raw_data.csv",col_types = cols
 TOC_final_summary <- read_csv("Data/Microbial biomass/TOC_final_summary.csv", col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 HH_extraction <- read_csv("Data/HH extraction/HH_extraction_raw_data.csv")
 bulk_soil_CN_isotopes <- read_csv("Data/Elemental and isotopes/bulk_soil_CN_natu_abund_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","c","e"))))
+all_pedon_meta_data <- read_csv("Data/all_pedon_meta_data.csv")
 ```
 
 ## soil pH and carbonates
@@ -31,9 +32,9 @@ mw_carbonate <- 100.0869 # molar mass of calcium carbonate
 mw_c <- 12.0107 # molar mass of C
 pH_carbonate_percent <- pH_carbonate %>% 
   mutate(percent_carbonate = mg_IC_g_soil_zero/1000*(mw_carbonate/mw_c)*100)
-ggplot(data = pH_carbonate_percent, aes(percent_carbonate, pH, color = horizon)) + 
+ggplot(data = pH_carbonate_percent, aes(pH, percent_carbonate, color = horizon)) + 
   geom_point(shape = 21, size = 2) +
-  labs(x = "CaCO3 (g/100g soil)", y = "pH") +
+  labs(x = "pH", y = "CaCO3 (g/100g soil)") +
   my_theme
 ```
 
@@ -47,9 +48,10 @@ size_fractions_calculated_values <- size_fractions %>%
          fine_fraction_g = total_sc_and_pan_g - total_sc_pan_g,
          recovery_percent = (coarse_fraction_g + fine_fraction_g) / soil_weight_g * 100,
          relative_coarse_fraction = coarse_fraction_g / soil_weight_g,
-         relative_fine_fraction = fine_fraction_g / soil_weight_g)
+         relative_fine_fraction = fine_fraction_g / soil_weight_g,
+         fine_coarse_ratio = relative_fine_fraction / relative_coarse_fraction)
 ggplot(data = size_fractions_calculated_values) + 
-  geom_line(aes(relative_coarse_fraction, relative_fine_fraction)) + 
+  geom_line(aes(fine_coarse_ratio, relative_fine_fraction)) + 
   my_theme
 
 ```
@@ -76,7 +78,7 @@ ggplot(data = drop_na(HH_calculated_values), aes(Fe_plus_Al, HH_DOC_mg_g)) +
 # calculating gravimetric, volumetric, and hygroscopic water contents, and bulk density
 core_volume <- 79.52156404 # volume of bulk density cores (cm^3)
 moisture_calculated_values <- moisture %>% 
-  select(2:5,9,10,11,12,13) %>% # selec relevant columns
+  select(2:5,7,9,10,11,12,13) %>% # selec relevant columns
   drop_na(bag_wet_soil) %>% # remove missing samples
    mutate(wet_weight = bag_wet_soil - bag_weight,
          ovendry_weight = tin_ovendry_weight - tin_weight,
@@ -84,7 +86,7 @@ moisture_calculated_values <- moisture %>%
          db = ovendry_weight/core_volume,
          VWC = GWC*db,
          HWC = (tin_airdry_weight - tin_ovendry_weight)/ovendry_weight) %>% 
-  group_by(unique_ID, pedon_ID, horizon) %>% 
+  group_by(unique_ID, pedon_ID, horizon, location) %>% 
   summarise(mean_GWC = mean(GWC, na.rm = TRUE),
             mean_HWC = mean(HWC, na.rm = TRUE),
             mean_VWC = mean(VWC, na.rm = TRUE),
@@ -98,26 +100,69 @@ ggplot(data = moisture_calculated_values, aes(mean_db, mean_GWC, color = horizon
 ```{r bulk CN isotopes, message=FALSE}
 # Subtract IC from TC to find OC
 calculated_bulk_CN <- left_join(bulk_soil_CN_isotopes, pH_carbonate_percent) %>% 
-  mutate(percent_OC = percent_C - mg_IC_g_soil_zero*0.1) 
-ggplot(data = calculated_bulk_CN, aes(percent_C, percent_OC, color = pH)) + geom_point()
-ggplot(data = calculated_bulk_CN, aes(horizon, percent_OC, alpha = pH)) + geom_boxplot() + geom_jitter()
+  mutate(SOC = percent_C - mg_IC_g_soil_zero*0.1)  
+ggplot(data = calculated_bulk_CN, aes(percent_C, SOC, color = pH)) + geom_point()
+ggplot(data = calculated_bulk_CN, aes(horizon, SOC, alpha = pH)) + geom_boxplot() + geom_jitter()
 ggplot(data = calculated_bulk_CN, aes(horizon, percent_N, alpha = pH)) + geom_boxplot() + geom_jitter()
 ```
+
+```{r MBC DOC}
+# calculating microbial and dissolved C, N per mass wet soil
+NPOC_volume <- 0.05 # extraction volume equals 50 mL
+calculated_MBC_DOC <- TOC_final_summary %>% 
+  mutate(DOC_mg_g_wet = NPOC * NPOC_volume / unfum_weight,
+         DN_mg_g_wet = TN * NPOC_volume / unfum_weight,
+        MBC_mg_g_wet = fum_NPOC * NPOC_volume / fum_weight,
+         MBN_mg_g_wet = fum_TN * NPOC_volume / fum_weight) %>% 
+  group_by(unique_ID, pedon_ID, horizon) %>% 
+  summarize(mean_DOC_wet = mean(DOC_mg_g_wet),
+            mean_DN_wet = mean(DN_mg_g_wet),
+            mean_MBC_wet = mean(MBC_mg_g_wet),
+            mean_MBN_wet = mean(MBN_mg_g_wet)
+            )
+ggplot(data = calculated_MBC_DOC, aes(mean_DOC_wet, mean_DN_wet)) + geom_point()
+```
+
 
 ```{r joining data frames}
 # select only for summarizing variable and unique_ID in each data frame
 ph_carbonate_short <- select(pH_carbonate_percent, 1, 6, 8)
 CN_short <- select(calculated_bulk_CN, 1,5, 6, 8, 14)
 HH_short <- select(HH_calculated_values, 2, 15, 16:18)
-size_short <- select(size_fractions_calculated_values, 1, 17, 18)
+size_short <- select(size_fractions_calculated_values, 1, 17, 18,19)
 joined_data <- left_join(moisture_calculated_values, ph_carbonate_short) 
 joined_data <- left_join(joined_data, CN_short) 
 joined_data <- left_join(joined_data, HH_short) 
 joined_data <- left_join(joined_data, size_short)
+joined_data <- left_join(joined_data, calculated_MBC_DOC)
+joined_data <- left_join(joined_data, all_pedon_meta_data, "pedon_ID")
 # joining data frames by unique_ID
 # moisture dataframe has horizons
 ```
-```{r joined_data}
-ggplot(joined_data, aes(HH_DOC_mg_g, percent_OC, alpha = pH)) + geom_point() + my_theme + labs(x = "HH extractable DOC (mg C/g soil)", y = "SOC (%)")
+
+
+```{r moisture correction}
+# normalizaing properties to oven dry weight
+joined_normalized_data <- joined_data %>% 
+  mutate(DOC = mean_DOC_wet * (mean_GWC + 1),
+         DN = mean_DN_wet * (mean_GWC + 1),
+         MBC = mean_MBC_wet * (mean_GWC + 1),
+         MBN = mean_MBN_wet * (mean_GWC + 1)
+  )
+
+  
+```
+
+
+```{r per C variable}
+joined_normalized_data_C <- joined_normalized_data %>% 
+  mutate(MBC_C = MBC / (SOC / 100),
+         MBN_N = MBN / (percent_N / 100),
+         DOC_C = DOC / (SOC / 100),
+         DN_N = DN / (percent_N / 100),
+         HH_DOC_C = HH_DOC_mg_g / (SOC / 100)
+         )
+ggplot(data = joined_normalized_data_C, aes(order, DOC_C)) + geom_boxplot() +
+my_theme
 ```
 

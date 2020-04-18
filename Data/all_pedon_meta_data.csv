@@ -1,4 +1,4 @@
-pedon_ID,location_name,state,latitude,longitude,sampled_depth,order,elevation_m,region,biome
+pedon_ID,location,state,latitude,longitude,sampled_depth,order,elevation_m,region,biome
 2,Whitlam Woods,ohio,41.6311,-81.19026,22,alfisol,332,midwest,temperate deciduous forest
 3,Punderson Park,ohio,41.46,-81.20551,20,alfisol,353,midwest,temperate deciduous forest
 4,Potato Creek,indiana,41.56243,-86.36213,32,alfisol,245,midwest,temperate deciduous forest
