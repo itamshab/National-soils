@@ -99,8 +99,25 @@ ggplot(data = moisture_calculated_values, aes(mean_db, mean_GWC, color = horizon
 # Subtract IC from TC to find OC
 calculated_bulk_CN <- left_join(bulk_soil_CN_isotopes, pH_carbonate_percent) %>% 
   mutate(percent_OC = percent_C - mg_IC_g_soil_zero*0.1) 
-ggplot(data = calculated_bulk_CN, aes(percent_C, OC, color = pH)) + geom_point()
+ggplot(data = calculated_bulk_CN, aes(percent_C, percent_OC, color = pH)) + geom_point()
 ggplot(data = calculated_bulk_CN, aes(horizon, percent_OC, alpha = pH)) + geom_boxplot() + geom_jitter()
-ggplot(data = calculated_bulk_CN, aes(horizon, percent_N)) + geom_boxplot() + geom_jitter()
+ggplot(data = calculated_bulk_CN, aes(horizon, percent_N, alpha = pH)) + geom_boxplot() + geom_jitter()
+```
+
+```{r joining data frames}
+# select only for summarizing variable and unique_ID in each data frame
+ph_carbonate_short <- select(pH_carbonate_percent, 1, 6, 8)
+CN_short <- select(calculated_bulk_CN, 1,5, 6, 8, 14)
+HH_short <- select(HH_calculated_values, 2, 15, 16:18)
+size_short <- select(size_fractions_calculated_values, 1, 17, 18)
+joined_data <- left_join(moisture_calculated_values, ph_carbonate_short) 
+joined_data <- left_join(joined_data, CN_short) 
+joined_data <- left_join(joined_data, HH_short) 
+joined_data <- left_join(joined_data, size_short)
+# joining data frames by unique_ID
+# moisture dataframe has horizons
+```
+```{r joined_data}
+ggplot(joined_data, aes(HH_DOC_mg_g, percent_OC, alpha = pH)) + geom_point() + my_theme + labs(x = "HH extractable DOC (mg C/g soil)", y = "SOC (%)")
 ```
 
