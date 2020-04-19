@@ -23,6 +23,36 @@ bulk_soil_CN_isotopes <- read_csv("Data/Elemental and isotopes/bulk_soil_CN_natu
 all_pedon_meta_data <- read_csv("Data/all_pedon_meta_data.csv")
 ```
 
+```{r moisture bulk density}
+# calculating gravimetric (GWC), volumetric (VWC), and hygroscopic (HWC) water contents, and bulk density (db)
+core_volume <- 79.52156404 # volume of bulk density cores (cm^3)
+moisture_calculated_values <- moisture %>% 
+  select(2:5,7,9,10,11,12,13) %>% # selecting relevant columns
+  drop_na(bag_wet_soil) %>% # removing missing samples
+   mutate(wet_weight = bag_wet_soil - bag_weight,
+         ovendry_weight = tin_ovendry_weight - tin_weight,
+         GWC = (wet_weight - ovendry_weight)/ovendry_weight,
+         db = ovendry_weight/core_volume,
+         VWC = GWC*db,
+         HWC = (tin_airdry_weight - tin_ovendry_weight)/ovendry_weight) %>% 
+  group_by(unique_ID, pedon_ID, horizon, location) %>% # calculating means from replicates
+  summarise(mean_GWC = mean(GWC, na.rm = TRUE),
+            mean_HWC = mean(HWC, na.rm = TRUE),
+            mean_VWC = mean(VWC, na.rm = TRUE),
+            mean_db = mean(db, na.rm = TRUE
+            ))
+# generating hygroscopic and gravimetric df only for merging and calculating moisture normalized values
+df_HWC <- moisture_calculated_values %>% 
+  ungroup(unique_ID, pedon_ID, horizon, location) %>% 
+  select(1,6)
+df_GWC <- moisture_calculated_values %>% 
+  ungroup(unique_ID, pedon_ID, horizon, location) %>% 
+  select(1,5)
+ggplot(data = moisture_calculated_values, aes(mean_db, mean_GWC, color = horizon)) +
+  geom_point() +
+  my_theme
+```
+
 ## soil pH and carbonates
 
 ```{r pH and carbonate}
@@ -32,9 +62,9 @@ mw_carbonate <- 100.0869 # molar mass of calcium carbonate
 mw_c <- 12.0107 # molar mass of C
 pH_carbonate_percent <- pH_carbonate %>% 
   mutate(percent_carbonate = mg_IC_g_soil_zero/1000*(mw_carbonate/mw_c)*100)
-ggplot(data = pH_carbonate_percent, aes(pH, percent_carbonate, color = horizon)) + 
+ggplot(data = pH_carbonate_percent, aes(percent_carbonate, pH, color = horizon)) + 
   geom_point(shape = 21, size = 2) +
-  labs(x = "pH", y = "CaCO3 (g/100g soil)") +
+  labs(x = "CaCO3 (g/100g soil)", y = "pH") +
   my_theme
 ```
 
@@ -50,6 +80,7 @@ size_fractions_calculated_values <- size_fractions %>%
          relative_coarse_fraction = coarse_fraction_g / soil_weight_g,
          relative_fine_fraction = fine_fraction_g / soil_weight_g,
          fine_coarse_ratio = relative_fine_fraction / relative_coarse_fraction)
+
 ggplot(data = size_fractions_calculated_values) + 
   geom_line(aes(fine_coarse_ratio, relative_fine_fraction)) + 
   my_theme
@@ -74,28 +105,6 @@ ggplot(data = drop_na(HH_calculated_values), aes(Fe_plus_Al, HH_DOC_mg_g)) +
   my_theme
 ```
 
-```{r moisture bulk density}
-# calculating gravimetric, volumetric, and hygroscopic water contents, and bulk density
-core_volume <- 79.52156404 # volume of bulk density cores (cm^3)
-moisture_calculated_values <- moisture %>% 
-  select(2:5,7,9,10,11,12,13) %>% # selec relevant columns
-  drop_na(bag_wet_soil) %>% # remove missing samples
-   mutate(wet_weight = bag_wet_soil - bag_weight,
-         ovendry_weight = tin_ovendry_weight - tin_weight,
-         GWC = (wet_weight - ovendry_weight)/ovendry_weight,
-         db = ovendry_weight/core_volume,
-         VWC = GWC*db,
-         HWC = (tin_airdry_weight - tin_ovendry_weight)/ovendry_weight) %>% 
-  group_by(unique_ID, pedon_ID, horizon, location) %>% 
-  summarise(mean_GWC = mean(GWC, na.rm = TRUE),
-            mean_HWC = mean(HWC, na.rm = TRUE),
-            mean_VWC = mean(VWC, na.rm = TRUE),
-            mean_db = mean(db, na.rm = TRUE
-            ))
-ggplot(data = moisture_calculated_values, aes(mean_db, mean_GWC, color = horizon)) +
-  geom_point() +
-  my_theme
-```
 
 ```{r bulk CN isotopes, message=FALSE}
 # Subtract IC from TC to find OC
