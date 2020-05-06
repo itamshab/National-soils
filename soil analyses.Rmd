@@ -41,16 +41,23 @@ moisture_calculated_values <- moisture %>%
             mean_VWC = mean(VWC, na.rm = TRUE),
             mean_db = mean(db, na.rm = TRUE
             ))
-# generating hygroscopic and gravimetric df only for merging and calculating moisture normalized values
+# generating bulkd density, hygroscopic and gravimetric df only for merging and calculating moisture normalized values
 df_HWC <- moisture_calculated_values %>% 
   ungroup(unique_ID, pedon_ID, horizon, location) %>% 
   select(1,6)
+
 df_GWC <- moisture_calculated_values %>% 
   ungroup(unique_ID, pedon_ID, horizon, location) %>% 
   select(1,5)
+
+df_db <- moisture_calculated_values %>% 
+  ungroup(unique_ID, pedon_ID, horizon, location) %>% 
+  select(1,8)
+
 ggplot(data = moisture_calculated_values, aes(mean_db, mean_GWC, color = horizon)) +
-  geom_point() +
-  my_theme
+geom_point() +
+labs(x = "Bulk density (g/cm^3)", y = "Gravimetric water content (g/g)") +  
+my_theme
 ```
 
 ## soil pH and carbonates
@@ -81,6 +88,7 @@ size_fractions_calculated_values <- size_fractions %>%
          relative_fine_fraction = fine_fraction_g / soil_weight_g,
          fine_coarse_ratio = relative_fine_fraction / relative_coarse_fraction)
 
+
 ggplot(data = size_fractions_calculated_values) + 
   geom_line(aes(fine_coarse_ratio, relative_fine_fraction)) + 
   my_theme
@@ -89,7 +97,7 @@ ggplot(data = size_fractions_calculated_values) +
 
 ## HH extraction
 
-```{r HH extraction}
+```{r HH extraction, message=FALSE, warning=FALSE}
 # calculate concentrations of HH-extractable C, Fe and Al per g soil
 HH_volume <- 0.01 # extracting solution was 10 mL
 HH_dilution <- 10 # all ICP samples diluted 1:9
@@ -106,16 +114,30 @@ ggplot(data = drop_na(HH_calculated_values), aes(Fe_plus_Al, HH_DOC_mg_g)) +
 ```
 
 
-```{r bulk CN isotopes, message=FALSE}
+```{r bulk CN isotopes, message=FALSE, warning=FALSE}
 # Subtract IC from TC to find OC
-calculated_bulk_CN <- left_join(bulk_soil_CN_isotopes, pH_carbonate_percent) %>% 
-  mutate(SOC = percent_C - mg_IC_g_soil_zero*0.1)  
-ggplot(data = calculated_bulk_CN, aes(percent_C, SOC, color = pH)) + geom_point()
-ggplot(data = calculated_bulk_CN, aes(horizon, SOC, alpha = pH)) + geom_boxplot() + geom_jitter()
-ggplot(data = calculated_bulk_CN, aes(horizon, percent_N, alpha = pH)) + geom_boxplot() + geom_jitter()
+calculated_bulk_CN <- left_join(bulk_soil_CN_isotopes, pH_carbonate_percent)  
+calculated_bulk_CN[c("mg_IC_g_soil_zero", "mg_IC_g_soil")][is.na(calculated_bulk_CN[c("mg_IC_g_soil_zero", "mg_IC_g_soil")])] <- 0
+calculated_bulk_CN <- calculated_bulk_CN %>% 
+ mutate(SOC = percent_C - mg_IC_g_soil_zero*0.1) %>% 
+  mutate(TN = percent_N)  
+
+ggplot(data = calculated_bulk_CN, aes(percent_C, SOC, color = pH)) + 
+geom_point() +
+my_theme
+
+ggplot(data = calculated_bulk_CN, aes(horizon, SOC, alpha = pH)) + 
+geom_boxplot() +
+geom_jitter() +
+my_theme
+
+ggplot(data = calculated_bulk_CN, aes(horizon, TN, alpha = pH)) + 
+geom_boxplot() + 
+geom_jitter() +
+my_theme
 ```
 
-```{r MBC DOC}
+```{r MBC DOC, message=FALSE, warning=FALSE}
 # calculating microbial and dissolved C, N per mass wet soil
 NPOC_volume <- 0.05 # extraction volume equals 50 mL
 calculated_MBC_DOC <- TOC_final_summary %>% 
@@ -129,49 +151,77 @@ calculated_MBC_DOC <- TOC_final_summary %>%
             mean_MBC_wet = mean(MBC_mg_g_wet),
             mean_MBN_wet = mean(MBN_mg_g_wet)
             )
-ggplot(data = calculated_MBC_DOC, aes(mean_DOC_wet, mean_DN_wet)) + geom_point()
+ggplot(data = calculated_MBC_DOC, aes(mean_MBC_wet, mean_MBN_wet)) + 
+geom_point() +
+my_theme
 ```
 
 
-```{r joining data frames}
+```{r joining data frames, message=FALSE, warning=FALSE}
 # select only for summarizing variable and unique_ID in each data frame
 ph_carbonate_short <- select(pH_carbonate_percent, 1, 6, 8)
-CN_short <- select(calculated_bulk_CN, 1,5, 6, 8, 14)
+CN_short <- select(calculated_bulk_CN, 1,5, 6, 14, 15)
 HH_short <- select(HH_calculated_values, 2, 15, 16:18)
 size_short <- select(size_fractions_calculated_values, 1, 17, 18,19)
-joined_data <- left_join(moisture_calculated_values, ph_carbonate_short) 
+
+# joining data frames by unique_ID
+# moisture dataframe has horizons
+joined_data <- inner_join(all_pedon_meta_data, moisture_calculated_values) 
+joined_data <- left_join(joined_data, ph_carbonate_short) 
 joined_data <- left_join(joined_data, CN_short) 
 joined_data <- left_join(joined_data, HH_short) 
 joined_data <- left_join(joined_data, size_short)
-joined_data <- left_join(joined_data, calculated_MBC_DOC)
-joined_data <- left_join(joined_data, all_pedon_meta_data, "pedon_ID")
-# joining data frames by unique_ID
-# moisture dataframe has horizons
+joined_data <- left_join(joined_data, calculated_MBC_DOC) %>% 
+  select(unique_ID, pedon_ID, horizon, everything())
 ```
 
 
 ```{r moisture correction}
-# normalizaing properties to oven dry weight
-joined_normalized_data <- joined_data %>% 
+# removing b horizon samples
+# normalizaing MBC/DOC to gravimetric weight and other properties to oven dry weight
+joined_data_moisture_corrected <- joined_data %>% 
+  filter(horizon != "b") %>% 
   mutate(DOC = mean_DOC_wet * (mean_GWC + 1),
          DN = mean_DN_wet * (mean_GWC + 1),
          MBC = mean_MBC_wet * (mean_GWC + 1),
          MBN = mean_MBN_wet * (mean_GWC + 1)
-  )
+  # insert script for correcting everything for hygroscopic moisture
+                  )
 
   
 ```
 
 
-```{r per C variable}
-joined_normalized_data_C <- joined_normalized_data %>% 
+```{r per C variable, message=FALSE, warning=FALSE}
+# normalizaing MBC/DOC to SOC and TN
+joined_data_per_SOC <- joined_data_moisture_corrected %>% 
   mutate(MBC_C = MBC / (SOC / 100),
-         MBN_N = MBN / (percent_N / 100),
+         MBN_N = MBN / (TN / 100),
          DOC_C = DOC / (SOC / 100),
-         DN_N = DN / (percent_N / 100),
+         DN_N = DN / (TN / 100),
          HH_DOC_C = HH_DOC_mg_g / (SOC / 100)
          )
-ggplot(data = joined_normalized_data_C, aes(order, DOC_C)) + geom_boxplot() +
+ggplot(data = joined_data_per_SOC, aes(order, HH_DOC_C)) + geom_boxplot() + geom_jitter(aes(order, HH_DOC_C, color = horizon)) +
+labs(x = "Soil order", y = "HH extractable DOC (mg/g SOC)") +
 my_theme
+
+ggplot(data = joined_data_per_SOC, aes(SOC, HH_DOC_C)) + 
+geom_point(aes(Fe_plus_Al, SOC, fill = pH), shape = 21, size = 2) +
+labs(y = "SOC (%)", x = "HH extractable Al+Fe (mg/g)") +
+my_theme
+
+```
+```{r joining data frames no B, message=FALSE, warning=FALSE}
+# select only for summarizing variable and unique_ID in each data frame
+ph_carbonate_short <- select(pH_carbonate_percent, 1,2, 3, 6, 8)
+CN_short <- select(calculated_bulk_CN, 1,5, 6, 14, 15)
+HH_short <- select(HH_calculated_values, 2, 15, 16:18)
+size_short <- select(size_fractions_calculated_values, 1, 17, 18,19)
+joined_data_noB <- inner_join(all_pedon_meta_data, ph_carbonate_short) 
+joined_data_noB <- left_join(joined_data_noB, CN_short) 
+joined_data_noB <- left_join(joined_data_noB, HH_short) 
+joined_data_noB <- left_join(joined_data_noB, size_short)
+joined_data_noB <- left_join(joined_data_noB, calculated_MBC_DOC) %>% 
+  select(unique_ID, pedon_ID, horizon, everything())
 ```
 
