@@ -9,7 +9,9 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(here, quietly = TRUE)
 library(tidyverse, quietly = TRUE)
+library(svglite, quietly = TRUE)
 my_theme <- theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ```
 
@@ -17,6 +19,8 @@ my_theme <- theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.mi
 pH_carbonate <- read_csv("Data/pH and carbonate/pH_carbonate_data_summary_final.csv", col_types = cols(horizon = col_factor(levels = c("a","c","o"))))
 size_fractions <- read_csv("Data/Size fractions/size_fractions_raw_data.csv", col_types = cols(horizon = col_factor(levels = c("a","c", "e"))))
 moisture <- read_csv("Data/Moisture/soil_moisture_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+missing_HWC <- read_csv("Data/Moisture/missing_HWC.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))# %>% 
+  select(1, 5) 
 TOC_final_summary <- read_csv("Data/Microbial biomass/TOC_final_summary.csv", col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 HH_extraction <- read_csv("Data/HH extraction/HH_extraction_raw_data.csv")
 bulk_soil_CN_isotopes <- read_csv("Data/Elemental and isotopes/bulk_soil_CN_natu_abund_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","c","e"))))
@@ -27,9 +31,10 @@ all_pedon_meta_data <- read_csv("Data/all_pedon_meta_data.csv")
 # calculating gravimetric (GWC), volumetric (VWC), and hygroscopic (HWC) water contents, and bulk density (db)
 core_volume <- 79.52156404 # volume of bulk density cores (cm^3)
 moisture_calculated_values <- moisture %>% 
-  select(2:5,7,9,10,11,12,13) %>% # selecting relevant columns
-  drop_na(bag_wet_soil) %>% # removing missing samples
-   mutate(wet_weight = bag_wet_soil - bag_weight,
+  dplyr::select(2:5,7,9,10,11,12,13) %>% # selecting relevant columns
+ #drop_na(bag_wet_soil) %>% # removing missing samples
+ #drop_na(tin_airdry_weight) %>% 
+  mutate(wet_weight = bag_wet_soil - bag_weight,
          ovendry_weight = tin_ovendry_weight - tin_weight,
          GWC = (wet_weight - ovendry_weight)/ovendry_weight,
          db = ovendry_weight/core_volume,
@@ -40,19 +45,20 @@ moisture_calculated_values <- moisture %>%
             mean_HWC = mean(HWC, na.rm = TRUE),
             mean_VWC = mean(VWC, na.rm = TRUE),
             mean_db = mean(db, na.rm = TRUE
-            ))
-# generating bulkd density, hygroscopic and gravimetric df only for merging and calculating moisture normalized values
+            )) 
+
+# generating bulk density, hygroscopic and gravimetric df only for merging and calculating moisture normalized values
 df_HWC <- moisture_calculated_values %>% 
   ungroup(unique_ID, pedon_ID, horizon, location) %>% 
-  select(1,6)
+  dplyr::select(1,6)
 
 df_GWC <- moisture_calculated_values %>% 
   ungroup(unique_ID, pedon_ID, horizon, location) %>% 
-  select(1,5)
+  dplyr::select(1,5)
 
 df_db <- moisture_calculated_values %>% 
   ungroup(unique_ID, pedon_ID, horizon, location) %>% 
-  select(1,8)
+  dplyr::select(1,8)
 
 ggplot(data = moisture_calculated_values, aes(mean_db, mean_GWC, color = horizon)) +
 geom_point() +
@@ -159,20 +165,20 @@ my_theme
 
 ```{r joining data frames, message=FALSE, warning=FALSE}
 # select only for summarizing variable and unique_ID in each data frame
-ph_carbonate_short <- select(pH_carbonate_percent, 1, 6, 8)
-CN_short <- select(calculated_bulk_CN, 1,5, 6, 14, 15)
-HH_short <- select(HH_calculated_values, 2, 15, 16:18)
-size_short <- select(size_fractions_calculated_values, 1, 17, 18,19)
+ph_carbonate_short <- dplyr::select(pH_carbonate_percent, 1, 6, 8)
+CN_short <- dplyr::select(calculated_bulk_CN, 1,5, 6, 14, 15)
+HH_short <- dplyr::select(HH_calculated_values, 2, 15, 16:18)
+size_short <- dplyr::select(size_fractions_calculated_values, 1, 17, 18,19)
 
 # joining data frames by unique_ID
 # moisture dataframe has horizons
-joined_data <- inner_join(all_pedon_meta_data, moisture_calculated_values) 
+joined_data <- inner_join(all_pedon_meta_data, moisture_calculated_values, by = "pedon_ID") 
 joined_data <- left_join(joined_data, ph_carbonate_short) 
 joined_data <- left_join(joined_data, CN_short) 
 joined_data <- left_join(joined_data, HH_short) 
 joined_data <- left_join(joined_data, size_short)
 joined_data <- left_join(joined_data, calculated_MBC_DOC) %>% 
-  select(unique_ID, pedon_ID, horizon, everything())
+  dplyr::select(unique_ID, pedon_ID, horizon, everything())
 ```
 
 
@@ -212,16 +218,38 @@ my_theme
 
 ```
 ```{r joining data frames no B, message=FALSE, warning=FALSE}
-# select only for summarizing variable and unique_ID in each data frame
-ph_carbonate_short <- select(pH_carbonate_percent, 1,2, 3, 6, 8)
-CN_short <- select(calculated_bulk_CN, 1,5, 6, 14, 15)
-HH_short <- select(HH_calculated_values, 2, 15, 16:18)
-size_short <- select(size_fractions_calculated_values, 1, 17, 18,19)
+# dplyr::select only for summarizing variable and unique_ID in each data frame
+ph_carbonate_short <- dplyr::select(pH_carbonate_percent, 1,2, 3, 6, 8)
+CN_short <- dplyr::select(calculated_bulk_CN, 1,5, 6, 14, 15)
+HH_short <- dplyr::select(HH_calculated_values, 2, 15, 16:18)
+size_short <- dplyr::select(size_fractions_calculated_values, 1, 17, 18,19)
 joined_data_noB <- inner_join(all_pedon_meta_data, ph_carbonate_short) 
 joined_data_noB <- left_join(joined_data_noB, CN_short) 
 joined_data_noB <- left_join(joined_data_noB, HH_short) 
 joined_data_noB <- left_join(joined_data_noB, size_short)
 joined_data_noB <- left_join(joined_data_noB, calculated_MBC_DOC) %>% 
-  select(unique_ID, pedon_ID, horizon, everything())
+  dplyr::select(unique_ID, pedon_ID, horizon, everything())
 ```
+
+```{r}
+data_for_fig <- joined_data_noB %>%
+  filter(horizon != "o") %>%
+  filter(unique_ID != 127 & unique_ID != 98) %>% 
+  mutate(hh_soc = HH_DOC_mg_g/SOC*10) 
+
+labels <- c(a = "A horizon", c = "C horizon")
+#sp + facet_grid(. ~ sex, labeller=labeller(sex = labels))
+
+fig_for_application <- ggplot(data_for_fig, aes(pH, hh_soc, fill = horizon)) + geom_point(size = 4, shape = 21) + facet_grid(. ~ horizon, labeller=labeller(horizon = labels)) + my_theme +
+theme(axis.text.x = element_text(colour="grey20",size=25,angle=0,hjust=0.5,vjust=1,face="plain"),
+      axis.text.y = element_text(colour="grey20",size=25,angle=0,hjust=.5,vjust=0.5,face="plain"), 
+      axis.title.x = element_text(colour="black",size=25,angle=0,hjust=.5,vjust=.5,face="bold"),
+      axis.title.y = element_text(colour="black",size=25,angle=90,hjust=.5,vjust=1.5,face="bold"),
+      strip.text.x = element_text(size = 20)) +
+  labs(y = "Dissolved organic C released \n (% of SOC)")
+fig_for_application
+ggsave("C:/Users/itama/Onedrive/Job search/UC Berkeley/Fig1.svg",plot = fig_for_application, width = 12, height = 6)
+
+```
+
 
