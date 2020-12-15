@@ -15,16 +15,19 @@ library(svglite, quietly = TRUE)
 my_theme <- theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 ```
 
-```{r data, include=FALSE}
-pH_carbonate <- read_csv("Data/pH and carbonate/pH_carbonate_data_summary_final.csv", col_types = cols(horizon = col_factor(levels = c("a","c","o"))))
-size_fractions <- read_csv("Data/Size fractions/size_fractions_raw_data.csv", col_types = cols(horizon = col_factor(levels = c("a","c", "e"))))
-moisture <- read_csv("Data/Moisture/soil_moisture_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
-missing_HWC <- read_csv("Data/Moisture/missing_HWC.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))# %>% 
+```{r data import, include=FALSE}
+pH_carbonate <- read_csv("./Data/pH and carbonate/pH_carbonate_data_summary_final.csv", col_types = cols(horizon = col_factor(levels = c("a","c","o"))))
+size_fractions <- read_csv("./Data/Size fractions/size_fractions_raw_data.csv", col_types = cols(horizon = col_factor(levels = c("a","c", "e"))))
+moisture <- read_csv("./Data/Moisture/soil_moisture_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+missing_HWC <- read_csv("./Data/Moisture/missing_HWC.csv",col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
   select(1, 5) 
-TOC_final_summary <- read_csv("Data/Microbial biomass/TOC_final_summary.csv", col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
-HH_extraction <- read_csv("Data/HH extraction/HH_extraction_raw_data.csv")
-bulk_soil_CN_isotopes <- read_csv("Data/Elemental and isotopes/bulk_soil_CN_natu_abund_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","c","e"))))
-all_pedon_meta_data <- read_csv("Data/all_pedon_meta_data.csv")
+TOC_final_summary <- read_csv("./Data/Microbial biomass/TOC_final_summary.csv", col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+HH_extraction <- read_csv("./Data/HH extraction/HH_extraction_raw_data.csv")
+bulk_soil_CN_isotopes <- read_csv("./Data/Elemental and isotopes/bulk_soil_CN_natu_abund_raw_data.csv",col_types = cols(horizon = col_factor(levels = c("a","c","e"))))
+all_pedon_meta_data <- read_csv("./Data/all_pedon_meta_data.csv")
+CEC <- 
+  read_csv("./Data/CEC/CEC_data.csv", col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
+  select(-1) 
 ```
 
 ```{r moisture bulk density}
@@ -66,8 +69,6 @@ labs(x = "Bulk density (g/cm^3)", y = "Gravimetric water content (g/g)") +
 my_theme
 ```
 
-## soil pH and carbonates
-
 ```{r pH and carbonate}
 # all negative inorganic C assumed equal to zero
 # convert inorganic C content to %carbonate in soils
@@ -80,8 +81,6 @@ ggplot(data = pH_carbonate_percent, aes(percent_carbonate, pH, color = horizon))
   labs(x = "CaCO3 (g/100g soil)", y = "pH") +
   my_theme
 ```
-
-## size fractions
 
 ```{r size fractions}
 # calculate fraction amount in g, relative amount and recovery
@@ -96,12 +95,10 @@ size_fractions_calculated_values <- size_fractions %>%
 
 
 ggplot(data = size_fractions_calculated_values) + 
-  geom_line(aes(fine_coarse_ratio, relative_fine_fraction)) + 
+  geom_point(aes(relative_coarse_fraction, relative_fine_fraction)) + 
   my_theme
 
 ```
-
-## HH extraction
 
 ```{r HH extraction, message=FALSE, warning=FALSE}
 # calculate concentrations of HH-extractable C, Fe and Al per g soil
@@ -119,7 +116,6 @@ ggplot(data = drop_na(HH_calculated_values), aes(Fe_plus_Al, HH_DOC_mg_g)) +
   my_theme
 ```
 
-
 ```{r bulk CN isotopes, message=FALSE, warning=FALSE}
 # Subtract IC from TC to find OC
 calculated_bulk_CN <- left_join(bulk_soil_CN_isotopes, pH_carbonate_percent)  
@@ -132,13 +128,8 @@ ggplot(data = calculated_bulk_CN, aes(percent_C, SOC, color = pH)) +
 geom_point() +
 my_theme
 
-ggplot(data = calculated_bulk_CN, aes(horizon, SOC, alpha = pH)) + 
-geom_boxplot() +
-geom_jitter() +
-my_theme
-
 ggplot(data = calculated_bulk_CN, aes(horizon, TN, alpha = pH)) + 
-geom_boxplot() + 
+geom_boxplot() +
 geom_jitter() +
 my_theme
 ```
@@ -162,6 +153,14 @@ geom_point() +
 my_theme
 ```
 
+```{r CEC, message=FALSE, warning=FALSE}
+CEC_tidy <- CEC %>% 
+  left_join(moisture_calculated_values, by = c("horizon", "pedon_ID")) %>% 
+  select(-c(10:14)) %>% 
+  rename(CEC = Sum) %>% 
+  relocate(unique_ID) 
+ggplot(CEC_tidy, aes(horizon, Ca, fill = extract)) + geom_boxplot()
+```
 
 ```{r joining data frames, message=FALSE, warning=FALSE}
 # select only for summarizing variable and unique_ID in each data frame
@@ -169,18 +168,21 @@ ph_carbonate_short <- dplyr::select(pH_carbonate_percent, 1, 6, 8)
 CN_short <- dplyr::select(calculated_bulk_CN, 1,5, 6, 14, 15)
 HH_short <- dplyr::select(HH_calculated_values, 2, 15, 16:18)
 size_short <- dplyr::select(size_fractions_calculated_values, 1, 17, 18,19)
+CEC_short <- dplyr::select(CEC_tidy, 1, 5, 6, 7, 8, 9)
 
 # joining data frames by unique_ID
 # moisture dataframe has horizons
-joined_data <- inner_join(all_pedon_meta_data, moisture_calculated_values, by = "pedon_ID") 
+joined_data <- inner_join(all_pedon_meta_data, moisture_calculated_values, by = "pedon_ID") %>% 
+  select(-16) %>% 
+    rename(location = location.x)
 joined_data <- left_join(joined_data, ph_carbonate_short) 
 joined_data <- left_join(joined_data, CN_short) 
 joined_data <- left_join(joined_data, HH_short) 
 joined_data <- left_join(joined_data, size_short)
+joined_data <- left_join(joined_data, CEC_short)
 joined_data <- left_join(joined_data, calculated_MBC_DOC) %>% 
   dplyr::select(unique_ID, pedon_ID, horizon, everything())
 ```
-
 
 ```{r moisture correction}
 # removing b horizon samples
@@ -194,9 +196,7 @@ joined_data_moisture_corrected <- joined_data %>%
   # insert script for correcting everything for hygroscopic moisture
                   )
 
-  
 ```
-
 
 ```{r per C variable, message=FALSE, warning=FALSE}
 # normalizaing MBC/DOC to SOC and TN
@@ -215,8 +215,8 @@ ggplot(data = joined_data_per_SOC, aes(SOC, HH_DOC_C)) +
 geom_point(aes(Fe_plus_Al, SOC, fill = pH), shape = 21, size = 2) +
 labs(y = "SOC (%)", x = "HH extractable Al+Fe (mg/g)") +
 my_theme
-
 ```
+
 ```{r joining data frames no B, message=FALSE, warning=FALSE}
 # dplyr::select only for summarizing variable and unique_ID in each data frame
 ph_carbonate_short <- dplyr::select(pH_carbonate_percent, 1,2, 3, 6, 8)
@@ -231,7 +231,7 @@ joined_data_noB <- left_join(joined_data_noB, calculated_MBC_DOC) %>%
   dplyr::select(unique_ID, pedon_ID, horizon, everything())
 ```
 
-```{r}
+```{r HH_horizon_fig}
 data_for_fig <- joined_data_noB %>%
   filter(horizon != "o") %>%
   filter(unique_ID != 127 & unique_ID != 98) %>% 
