@@ -1,0 +1,37 @@
+---
+title: Biogeochemical properties data analysis
+author: Itamar Shabtai
+date: "`r Sys.Date()`"
+output: 
+  github_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Libraries
+
+library(tidyverse)
+library(here)
+
+
+
+# Parameters
+ data_file <- here("/data/normalized_final_data.rds")
+ my_theme <- theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+ #===============================================================================
+
+# load data
+ data <- read_rds(data_file)
+ 
+```
+
+## Section 1
+
+### Subsection
+
+## Section 2
+

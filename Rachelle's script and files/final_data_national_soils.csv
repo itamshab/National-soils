@@ -1,0 +1,74 @@
+Below is a list of the variables included in this datasheet and brief descriptions of what they are/how they were derived and what units they are if applicable,
+,
+pedon_ID,"number of sampled pedon, 2-73"
+horizon,"horizon of sampled pedon: litter, o, a, e, b, c"
+location,common name of sample pedon
+state,state pedon was collected in
+latitude_longitude_full,full lat/long
+latitude,latitude of collection
+longitude,longitude of collection
+depth_inches,depths of horizon thicknesses in inches
+horizon_top_inches,the uppermost depth of designated horizon
+horizon_bottom_inches,the lowermost depth of designated horizon
+horizon_middle_inches,the middle depth of designated horizon
+total_depth_sampled_inches,the lowermost depth of entire soil profile/predon collected
+region,"Northeast, Midwest, West, North West, Pacific Coast, Southwest, Central, Southeast, "
+soil_order,"Soil order: mollisol, inceptisol, entisol, alfisol, andisol, aridisol, vertisol, gelisol, ultisol"
+dominant_vegetation_class,"Major groupings based on common vegetation listed in OSD and what was observed on location. Used to group samples into ""biomes"". Groups are: deciduous hardwood forests, coniferous forests, mixed hardwood and coniferous forests, grasses, shrubs, tussock sedges and forbes"
+soil_moisture_regime,"based on common vegetation listed in OSD in soil family designation and what was observed on location: aquic, udic, ustic, aridic, xeric,"
+soil_temperature_regime,"based on common vegetation listed in OSD in soil family designation and what was observed on location: thermic, mesic, cryic, frigid, pergelic"
+elevation_m,"elevation in meters, from GPS on site."
+horizon_old,"horizon desingations from time of sampling. Some horizons were updated to adjust for b1, b2 = b, c; c1, c2 = b, c; b/c = b"
+mat_c,"mean annual temperature, derived from WorldClim Raster data, data extracted based on lat long coordinates of sample locations"
+map_mm,"mean annual precipitation, total mm of precip, derived from WorldClim Raster data, data extracted based on lat long coordinates of sample locations"
+aridity,"aridity index, calculated from MAT/MAP/PET from WorldClim raster data set"
+series_extent_map_acres,acres of estimated/mapped coverage for soil series - from UC Davis Soil Web/NRCS
+common_vegetation,list of vegetation common to soil series from OSD on Soil Web/NRCS
+soil_family,soil series classification to the family level
+soil_series_name,soil series common name
+date_sampled,date the soil pedon was sampled in the field
+mean_GWC,
+mean_HWC,
+mean_VWC,
+mean_db,
+delta13C_vs_VPDB,
+delta15N_vs_at_air_air,
+percent_carbonate,
+SOC,
+TN,
+HH_DOC_ppm,
+HH_DOC_mg_g,
+Fe_mg_g,
+Al_mg_g,
+Fe_plus_Al,
+relative_coarse_fraction,
+relative_fine_fraction,
+fine_coarse_ratio,
+extract,
+Mg,
+Na,
+K,
+CEC,
+mean_DOC_wet,
+mean_DN_wet,
+mean_MBC_wet,
+mean_MBN_wet,
+texture_class,
+sand,
+silt,
+clay,
+silt_clay,
+DOC,
+DN,
+MBC,
+MBN,
+IC,
+HH_DOC,
+Fe,
+Al,
+Fe_Al,
+MBC_C,
+MBN_N,
+DOC_C,
+DN_N,
+HH_DOC_C,

@@ -1,0 +1,42 @@
+unique_ID,pedon_ID,horizon,location,mean_GWC,mean_HWC,mean_VWC,mean_db
+66,68,a,Ribdon,NA,NA,NA,NA
+67,69,a,Sagavanirktok (Sag),NA,NA,NA,NA
+68,70,a,Flat,NA,NA,NA,NA
+69,71,a,Slope Mountain,NA,NA,NA,NA
+70,72,a,Oksrukuyik Creek (Oks),NA,NA,NA,NA
+71,73,a,Kuparuk River,NA,NA,NA,NA
+73,3,c,Punderson Park,NA,NA,NA,NA
+75,5,c,Shoe Factory Rd,NA,NA,NA,NA
+76,6,c,Pecatonica,NA,NA,NA,NA
+78,8,c,Fox Coulee,NA,NA,NA,NA
+79,9,c,Great Bluffs,NA,NA,NA,NA
+80,11,c,Good Soldier,NA,NA,NA,NA
+81,12,c,Cottonwood,NA,NA,NA,NA
+85,17,c,Grab Bag,NA,NA,NA,NA
+86,18,c,Potosi,NA,NA,NA,NA
+87,19,c,Turah,NA,NA,NA,NA
+88,20,c,Clearwater,NA,NA,NA,NA
+89,21,c,Olympic,NA,NA,NA,NA
+90,22,c,Disappointment,NA,NA,NA,NA
+93,25,c,Alsea,NA,NA,NA,NA
+95,28,c,El Dorado,NA,NA,NA,NA
+96,29,c,Merklee,NA,NA,NA,NA
+98,31,c,Death Valley,NA,NA,NA,NA
+99,32,c,Flagstaff,NA,NA,NA,NA
+100,33,c,Jerome,NA,NA,NA,NA
+109,43,c,Gambil,NA,NA,NA,NA
+111,45,c,Dagmar,NA,NA,NA,NA
+112,46,c,Lewis,NA,NA,NA,NA
+117,51,c,Finger Lakes,NA,NA,NA,NA
+121,55,c,Aroostook,NA,NA,NA,NA
+123,57,c,Halifax,NA,NA,NA,NA
+131,67,c,Wallowa,NA,NA,NA,NA
+132,68,c,Ribdon,NA,NA,NA,NA
+133,69,c,Sagavanirktok (Sag),NA,NA,NA,NA
+134,71,c,Slope Mountain,NA,NA,NA,NA
+135,7,o,Black River Falls,NA,NA,NA,NA
+137,57,e,Halifax,NA,NA,NA,NA
+142,6,b,Pecatonica,NA,NA,NA,NA
+165,31,b,Death Valley,NA,NA,NA,NA
+199,72,b,Oksrukuyik Creek (Oks),NA,NA,NA,NA
+200,73,b,Kuparuk River,NA,NA,NA,NA

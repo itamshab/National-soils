@@ -1,0 +1,94 @@
+pedon_ID,horizon,texture_class,sand,silt,clay,silt_clay,location
+2,a,Loam,40,45,15,60,Whitlam Woods
+2,c,Clay Loam,22.5,43.8,33.8,77.6,Whitlam Woods
+3,a,Sandy Loam,58.8,32.5,8.8,41.3,Punderson Park
+3,c,Loam,45,35,20,55,Punderson Park
+4,a,Sandy Loam,53.8,36.3,10,46.3,Potato Creek
+6,a,Silt Loam,20,56.3,23.8,80.1,Pecatonica
+6,c,Silt Loam,17.5,60,22.5,82.5,Pecatonica
+8,a,Silt Loam,17.5,63.8,18.8,82.6,Fox Coulee
+8,c,Sandy Loam,75,16.3,8.8,25.1,Fox Coulee
+10,a,Loam,32.5,50,17.5,67.5,Blue mounds
+12,a,Clay Loam,25,37.5,37.5,75,Cottonwood
+12,c,Clay,26.3,31.3,42.5,73.8,Cottonwood
+14,a,Loamy Sand,77.5,16.3,6.3,22.6,Spearfish
+14,c,Sandy Loam,65,25,10,35,Spearfish
+15,a,Clay Loam,33.8,32.5,33.8,66.3,Twisted Cedar
+15,c,Clay Loam,27.5,35,37.5,72.5,Twisted Cedar
+16,a,Silt Loam,32.5,55,12.5,67.5,Tensleep
+16,c,Silt Loam,26.3,56.3,17.5,73.8,Tensleep
+17,a,Clay,12.5,40.65,46.9,87.55,Grab Bag
+17,c,Clay,13.8,31.3,55,86.3,Grab Bag
+18,a,Sandy Loam,62.5,26.3,11.3,37.6,Potosi
+18,c,Sandy Loam,73.8,21.3,5,26.3,Potosi
+19,a,Loam,47.5,45,7.5,52.5,Turah
+20,a,Sandy Loam,61.3,33.8,5,38.8,Clearwater
+20,c,Loamy Sand,75,20,5,25,Clearwater
+21,a,Sandy Loam,65,17.5,17.5,35,Olympic
+22,a,Sandy Loam,52.5,28.8,18.8,47.6,Disappointment
+22,c,Loam,40,36.3,23.8,60.1,Disappointment
+24,a,Sandy Loam,62.5,22.5,15,37.5,Siuslaw
+24,c,Loam,47.5,28.8,23.8,52.6,Siuslaw
+25,a,Clay Loam,26.3,35,38.8,73.8,Alsea
+28,a,Sandy Loam,75,18.8,6.3,25.1,El Dorado
+28,c,Sand,87.5,8.8,3.8,12.6,El Dorado
+29,a,Loam,45,31.3,23.8,55.1,Merklee
+29,c,Sandy Clay Loam,45,27.5,27.5,55,Merklee
+31,a,Sandy Loam,75,18.8,6.3,25.1,Death Valley
+31,c,Loamy Sand,82.5,10,7.5,17.5,Death Valley
+32,a,Clay Loam,37.5,28.8,33.8,62.6,Flagstaff
+32,c,Sandy Clay Loam,45,25,30,55,Flagstaff
+33,a,Sandy Loam,52.5,32.5,15,47.5,Jerome
+33,c,Sandy Loam,56.3,31.3,12.5,43.8,Jerome
+34,a,Sandy Loam,55,35,10,45,Tonto
+34,c,Loam,40,36.3,23.8,60.1,Tonto
+36,a,Sand,95,2.5,2.5,5,El Malpais
+36,c,Sand,92.5,2.5,5,7.5,El Malpais
+37,a,Sandy Clay Loam,54.4,16.3,29.4,45.7,Vegas
+37,c,Sandy Clay Loam,50,15,35,50,Vegas
+39,a,Loamy Sand,85,6.3,8.8,15.1,Rita
+39,c,Loamy Sand,85,3.8,11.3,15.1,Rita
+40,a,Sandy Loam,60,30,10,40,Silverton
+40,c,Loam,42.5,32.5,25,57.5,Silverton
+41,a,Loam,43.8,38.8,17.5,56.3,Arbuckle
+41,c,Clay,30,27.5,42.5,70,Arbuckle
+43,a,Loam,45,47.5,7.5,55,Gambil
+44,a,Silt Loam,30,57.5,12.5,70,Ouachita
+44,c,Loam,32.5,48.8,18.8,67.6,Ouachita
+46,a,Silt Loam,20,63.8,16.3,80.1,Lewis
+46,c,Loam,30,46.3,23.8,70.1,Lewis
+47,a,Loam,41.3,45,13.8,58.8,Prentice
+47,c,Loam,37.5,42.5,20,62.5,Prentice
+48,a,Sandy Loam,65,23.8,11.3,35.1,Stone Mountain
+48,c,Sandy Loam,67.5,22.5,10,32.5,Stone Mountain
+49,a,Sandy Loam,68.8,18.8,12.5,31.3,Jefferson
+49,c,Loam,47.5,30,22.5,52.5,Jefferson
+50,a,Loam,27.5,50,22.5,72.5,Monagahela
+50,c,Clay,6.3,30,63.8,93.8,Monagahela
+51,a,Loam,28.8,48.8,22.5,71.3,Finger Lakes
+51,c,Loam,37.5,40,22.5,62.5,Finger Lakes
+52,a,Sandy Loam,60,27.5,12.5,40,Waitsfield
+52,c,Loam,48.8,32.5,18.8,51.3,Waitsfield
+53,a,Sandy Loam,67.5,26.3,6.3,32.6,White Mountains
+53,c,Sandy Loam,70,27.5,2.5,30,White Mountains
+54,a,Silt Loam,30,52.5,17.5,70,Bangor
+54,c,Silt Loam,27.5,52.5,20,72.5,Bangor
+55,a,Loam,45,42.5,12.5,55,Aroostook
+55,c,Sandy Loam,57.5,32.5,10,42.5,Aroostook
+57,a,Sandy Loam,71.3,26.3,2.5,28.8,Halifax
+57,c,Sandy Loam,75,16.3,8.8,25.1,Halifax
+59,a,Silt Loam,21.3,61.3,17.5,78.8,Portobello Creek
+59,c,Silt Loam,45,33.125,43.125,71.25,Portobello Creek
+62,a,Sandy Loam,70,25,5,30,Vermontville
+62,c,Sandy Loam,67.5,28.8,3.8,32.6,Vermontville
+63,a,Sandy Loam,71.3,21.3,7.5,28.8,Ohio
+63,c,Sandy Loam,75,18.8,6.3,25.1,Ohio
+64,a,Silt Loam,32.5,56.3,11.3,67.6,Moscow
+64,c,Silt Loam,32.5,65,2.5,67.5,Moscow
+65,a,Loam,35,48.8,16.3,65.1,Brundage
+66,a,Sandy Loam,70,12.5,17.5,30,Payette
+67,a,Loam,35,40,25,65,Wallowa
+67,c,Loam,32.5,43.8,23.8,67.6,Wallowa
+68,c,Clay Loam,35,37.5,27.5,65,Ribdan
+69,c,Silt Loam,20,58.8,21.3,80.1,Sagavinirktok
+71,c,Sandy Loam,62.5,21.3,16.3,37.6,Slope mountain

@@ -1,0 +1,73 @@
+pedon_ID,location,state,latitude,longitude,sampled_depth,order,elevation_m,region,biome,MAT_C,MAP_mm,aridity_index
+2,Whitlam Woods,ohio,41.6311,-81.19026,22,alfisol,332,midwest,temperate deciduous forest,8.77,1092,0.783
+3,Punderson Park,ohio,41.46,-81.20551,20,alfisol,353,midwest,temperate deciduous forest,8.88,1081,0.764
+4,Potato Creek,indiana,41.56243,-86.36213,32,alfisol,245,midwest,temperate deciduous forest,9.67,991,0.657
+5,Shoe Factory Road,indiana,42.06039,-88.15951,50,mollisol,262,midwest,temperate deciduous forest,8.9,917,0.616
+6,Pecatonica,illinois,42.31607,-89.3617,50,mollisol,228,midwest,temperate deciduous forest,8.38,883,0.598
+7,Blackriver Falls,wisconsin,44.21725,-90.6148,35,spodosol,311,midwest,temperate deciduous forest,6.54,842,0.64
+8,Fox Coulee,wisconsin,44.46521,-92.02736,40,entisol,211,midwest,temperate deciduous forest,7.24,805,0.574
+9,Great Bluffs,minnesota,43.94445,-91.39575,45,alfisol,391,great plains,temperate deciduous forest,7.16,828,0.591
+10,Blue Mounds,minnesota,43.69268,-96.18832,48,mollisol,489,great plains,temperate grassland,6.98,685,0.443
+11,Good Soldier,south dakota,44.01227,-99.4501,45,vertisol,489,great plains,temperate grassland,8.22,475,0.26
+12,Cottonwood,south dakota,43.98026,-101.89979,30,inceptisol,1087,great plains,temperate grassland,8.44,433,0.216
+13,Stagebarn,south dakota,44.20622,-103.37358,15,entisol,1102,great plains,temperate grassland,8.02,501,0.25
+14,Spearfish,south dakota,44.45069,-103.86455,36,alfisol,1306,great plains,temperate grassland,7.38,559,0.296
+15,Twisted Cedar,wyoming,44.13849,-104.59112,18,aridisol,1306,mountain west,temperate grassland,6.93,386,0.2
+16,Tensleep,wyoming,44.05055,-107.43088,20,entisol,1409,mountain west,desert,7.24,304,0.151
+17,Grab Bag,montana,45.5529,-107.34871,45,entisol,972,mountain west,temperate grassland,7.58,411,0.208
+18,Potosi,montana,45.57203,-111.91427,25,inceptisol,1907,mountain west,temperate grassland,3.44,428,0.276
+19,Turah,montana,46.63344,-114.58388,35,inceptisol,1632,mountain west,temperate coniferous forest,3.64,388,0.273
+20,Clearwater,idaho,46.51269,-114.76499,16,andisol,1131,mountain west,temperate coniferous forest,6.25,236,0.157
+21,Olympic,washington,47.35765,-123.88751,29,andisol,287,pacific coast,temperate coniferous forest,9.18,3205,2.825
+22,Disappointment,washington,46.30717,-124.06658,40,andisol,30,pacific coast,temperate coniferous forest,10.38,2082,1.826
+23,Clatsop,oregon,46.0656,-123.65753,29,inceptisol,260,pacific coast,temperate deciduous forest,9.48,2274,1.972
+24,Siuslaw,oregon,44.48822,-123.53664,15,andisol,733,pacific coast,temperate deciduous forest,8.72,2757,2.101
+25,Alsea,oregon,44.47251,-123.50966,24,ultisol,502,pacific coast,temperate deciduous forest,9.49,2456,1.846
+26,Klamath,oregon,42.40148,-121.7994,22,andisol,1526,pacific coast,temperate coniferous forest,6.67,533,0.303
+27,Shasta,california,40.17399,-121.03988,32,alfisol,1292,pacific coast,temperate coniferous forest,8.73,921,0.455
+28,El Dorado,california,38.80521,-120.10219,40,inceptisol,1997,pacific coast,desert,5.8,911,0.464
+29,Merklee,california,38.66673,-119.66681,46,mollisol,2202,pacific coast,desert,5.86,561,0.265
+30,Bishop,california,37.33582,-118.48594,10,entisol,1492,pacific coast,desert,12.27,228,0.077
+31,Death Valley,california,36.86487,-116.77128,14,aridisol,952,pacific coast,desert,16.12,105,0.03
+32,Flagstaff,arizona,35.21865,-111.52502,15,mollisol,1915,southwest,temperate coniferous forest,8.75,486,0.195
+33,Jerome,arizona,34.55027,-111.87759,38,unknown,993,southwest,temperate coniferous forest,16.91,392,0.121
+34,Tonto,arizona,34.31288,-111.03776,15,unknown,1741,southwest,temperate coniferous forest,10.74,579,0.226
+35,Gallup,new mexico,35.50491,-108.50939,9,aridisol,2079,southwest,desert,9.08,310,0.125
+36,El Malpais,new mexico,34.95594,-107.82979,14,alfisol,2082,southwest,desert,9.98,282,0.111
+37,Vegas,new mexico,35.53826,-105.16809,16,entisol,1989,southwest,temperate grassland,9.43,429,0.176
+38,Kiowa,new mexico,36.07344,-104.28123,17,aridisol,1795,southwest,temperate coniferous forest,10.42,392,0.147
+39,Rita,texas,36.41055,-102.59466,17,alfisol,1279,southwest,temperate grassland,12.64,427,0.152
+40,Silverton,texas,34.48575,-101.36531,20,mollisol,996,southwest,temperate grassland,14.3,533,0.187
+41,Arbuckle,oklahoma,34.29457,-96.96809,19,vertisol,243,southwest,temperate grassland,16.78,974,0.429
+42,Bonham,texas,33.64435,-96.134,21,alfisol,173,southwest,temperate grassland,17.16,1100,0.502
+43,Gambil,texas,33.69976,-95.65833,29,mollisol,166,southwest,temperate grassland,16.94,1149,0.54
+44,Ouachita,arkansas,34.68736,-93.81714,15,ultisol,276,southeast,temperate deciduous forest,15.2,1352,0.703
+45,Dagmar,arkansas,34.85021,-91.29857,29,vertisol,53,southeast,temperate deciduous forest,16.42,1256,0.613
+46,Lewis,tennessee,35.55439,-87.63462,15,ultisol,276,appalachian highlands,temperate deciduous forest,14.08,1446,0.79
+47,Prentice,tennessee,35.13363,-85.9183,22,inceptisol,564,appalachian highlands,temperate deciduous forest,14,1546,0.874
+48,Stone Mountain,north carolina,36.39753,-81.03891,17,ultisol,536,appalachian highlands,temperate deciduous forest,12.36,1215,0.744
+49,Jefferson,virginia,37.80105,-79.63214,20,inceptisol,520,appalachian highlands,temperate deciduous forest,11.52,1049,0.637
+50,Monongahela,west virginia,38.96732,-79.23654,,alfisol,510,appalachian highlands,temperate deciduous forest,10.64,973,0.624
+51,Finger Lakes,new york,42.49991,-76.78338,20,inceptisol,547,northeast,temperate deciduous forest,7.08,952,0.728
+52,Waistfield,vermont,44.18097,-72.81144,20,spodosol,260,northeast,temperate deciduous forest,5.93,1072,0.878
+53,White Mountains,new hampshire,44.33556,-71.45993,28,inceptisol,493,northeast,temperate deciduous forest,4.59,1101,0.954
+54,Bangor,maine,44.96711,-68.5414,18,spodosol,51,northeast,temperate deciduous forest,6.08,1067,0.828
+55,Aroostook,maine,46.60899,-68.00531,30,spodosol,193,northeast,temperate deciduous forest,3.84,924,0.803
+56,John Lusby,new brunswick,45.93782,-64.24512,7,spodosol,4,northeast,temperate deciduous forest,5.62,1136,1.078
+57,Halifax,nova scotia,44.69163,-63.69352,14,spodosol,57,northeast,temperate deciduous forest,6.56,1448,1.281
+58,Kentville,nova scotia,45.04668,-64.51591,23,spodosol,108,northeast,temperate deciduous forest,6.25,1216,1.072
+59,Portobello Creek,new brunswick,45.90001,-66.25795,18,spodosol,12,northeast,temperate deciduous forest,5.64,1115,0.978
+60,Cabano,quebec,47.65099,-68.90662,18,spodosol,178,northeast,temperate deciduous forest,3.03,1001,0.903
+61,Trois Rivieres,quebec,46.29235,-72.7122,15,spodosol,10,northeast,temperate deciduous forest,4.86,993,0.879
+62,Vermontville,new york,44.50437,-74.02173,23,spodosol,528,northeast,temperate deciduous forest,4.34,1042,0.93
+63,Ohio,new york,43.36009,-74.96658,16,spodosol,403,northeast,temperate deciduous forest,5.73,1258,1.058
+64,Moscow Mountain,idaho,46.79864,-116.90064,165,alfisol,1021.3,mountain west,temperate grassland,7.16,700,0.466
+65,Brundage,idaho,44.95792,-116.16967,38,inceptisol,1525.7,mountain west,temperate coniferous forest,4.56,618,0.409
+66,Payette,idaho,43.83892,-116.24185,34,vertisol,1286.4,mountain west,temperate coniferous forest,8.44,516,0.261
+67,Wallowa National Forest,oregon,45.6937,-117.27432,31,andisol,1489.8,mountain west,temperate coniferous forest,4.96,496,0.34
+68,Ribdon,alaska,68.87527,-148.85725,10,gelisol,435,arctic,tundra,-9.57,215,0.348
+69,Sagavanirktok,alaska,68.80778,-148.8183,7,gelisol,449,arctic,tundra,-9.32,217,0.343
+70,Flat,alaska,68.72625,-148.92618,7.5,gelisol,609,arctic,tundra,-8.37,231,0.333
+71,Slope mountain,alaska,68.6881,-149.08034,7,gelisol,771,arctic,tundra,-8.77,240,0.371
+72,Oksrikuyik Creek,alaska,68.65769,-149.27446,4,gelisol,846,arctic,tundra,-9.2,238,0.381
+73,Kuparuk River,alaska,68.64657,-149.40942,5,gelisol,735,arctic,tundra,-9.17,237,0.385
