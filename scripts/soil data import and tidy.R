@@ -12,55 +12,66 @@ library(here)
 
 omics_soil_metadata <- 
   read_csv("./raw-data/metadata_with_dna.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","c"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c"))))
 
 metadata <- 
   read_csv("./raw-data/all_sample_metadata.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","b","e", "c","o", "litter"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","b","e", "c","o", "litter"))))
 
 pH_carbonate <- 
   read_csv("./raw-data/pH and carbonate/pH_carbonate_data_summary_final.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","c","o"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c","o"))))
 
 size_fractions <- 
   read_csv("./raw-data/Size fractions/size_fractions_raw_data.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","c", "e"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c", "e"))))
 
 moisture <- 
   read_csv("./raw-data/Moisture/soil_moisture_raw_data.csv", 
-           col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 
 missing_HWC <- 
   read_csv("./raw-data/Moisture/missing_HWC.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
   select(1, 5) 
 
 TOC_final_summary <- 
   read_csv("./raw-data/Microbial biomass/TOC_final_summary.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 
 HH_extraction <- 
   read_csv("./raw-data/HH extraction/HH_extraction_raw_data.csv")
 
 bulk_soil_CN_isotopes <- 
   read_csv("./raw-data/Elemental and isotopes/bulk_soil_CN_natu_abund_raw_data.csv",
-           col_types = cols(horizon = col_factor(levels = c("a","c","e"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c","e"))))
 
 all_pedon_meta_data <- 
   read_csv("./raw-data/all_pedon_meta_data.csv")
 
 CEC <- 
   read_csv("./raw-data/CEC/CEC_data.csv", 
-           col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
   select(-1) 
 
 particle_size <- 
   read_csv(here("./raw-data/Particle size distribution/size_data.csv"), 
-                          col_types = cols(horizon = col_factor(levels = c("a","c"))))
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c"))))
 
 # Tidy moisture and bulk density----
 
-# calculating gravimetric (GWC), volumetric (VWC), hygroscopic (HWC) water contents, bulk density (db)
+# calculating gravimetric (GWC), volumetric (VWC), 
+# hygroscopic (HWC) water contents, bulk density (db)
 
 core_volume <- 79.52156404 # volume of bulk density cores (cm^3)
 
