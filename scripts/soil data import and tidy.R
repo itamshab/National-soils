@@ -47,7 +47,7 @@ missing_moisture <-
            col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 
 TOC_final_summary <- 
-  read_csv("./raw-data/Microbial biomass/TOC_final_summary.csv",
+  read_csv("./raw-data/Microbial biomass/TOC_final_summary_040521.csv",
            col_types = 
              cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 
@@ -303,7 +303,6 @@ omics_tidy <- omics_soil_metadata %>%
             aridity,soil_order,dominant_vegetation_class,biome,
             soil_moisture_regime,soil_temperature_regime,state,soil_series_name,
             series_extent_map_acres,common_vegetation,soil_family,project))
-
 
 omics_tidy$pedon_ID <- as.numeric(omics_soil_metadata$pedon_ID)
 

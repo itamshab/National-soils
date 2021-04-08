@@ -3,6 +3,8 @@ title: "20210112 National Soils Data Processing Final Script"
 author: "Rachelle LaCroix"
 date: "1/12/2021"
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # This script imports and wrangles all national soils data files into single dataframe.
@@ -27,6 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(here)
 library(readxl)
+library(naniar)
 ```
 
 ```{r}
@@ -47,7 +50,11 @@ moisture <-
 missing_HWC <- 
   read_csv("./raw_data/Moisture/missing_HWC.csv",
            col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
-  select(1, 5) 
+  dplyr::select(1, 5) 
+
+missing_moisture <- 
+  read_csv("./raw_data/Moisture/samples_without_moisture_data.csv", 
+           col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o"))))
 
 TOC_final_summary <- 
   read_csv("./raw_data/Microbial biomass/TOC_final_summary.csv",
@@ -67,11 +74,22 @@ all_pedon_meta_data <-
 CEC <- 
   read_csv("./raw_data/CEC/CEC_data.csv", 
            col_types = cols(horizon = col_factor(levels = c("a","b", "c", "e", "o")))) %>% 
-  select(-1) 
+  dplyr::select(-1) 
 
 particle_size <- 
   read_csv("./raw_data/Particle size distribution/size_data.csv", 
                           col_types = cols(horizon = col_factor(levels = c("a","c"))))
+
+omics_soil_metadata <- 
+  read_csv("./raw_data/DNA/metadata_with_DNA.csv",
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c"))))
+
+saturation <- 
+  read_xlsx("./raw_data/Moisture/2021_saturation_measurements.xlsx", sheet='mean_values')
+
+cover <- 
+  read.csv("./raw_data/cover photos/blackandwhite/20210405_natsoil_cover.csv")
 
 # Tidy moisture and bulk density----
 
@@ -93,11 +111,25 @@ moisture_calculated_values <- moisture %>%
   summarise(mean_GWC = mean(GWC, na.rm = TRUE),
             mean_HWC = mean(HWC, na.rm = TRUE),
             mean_VWC = mean(VWC, na.rm = TRUE),
-            mean_db = mean(db, na.rm = TRUE
-            )) 
+            mean_db = mean(db, na.rm = TRUE)) 
 
-#write_rds(x = moisture_calculated_values, file = here("data/moisture_bulk_density.rds"))
-#write_csv(moisture_calculated_values, "moisture_bulk_density.csv")
+moisture_calculated_values_new <- missing_moisture %>% 
+  mutate(GWC = (soil_weight_wet - soil_ovendry_weight)/soil_ovendry_weight,
+         HWC = (soil_airdry_weight - soil_ovendry_weight)/soil_ovendry_weight) %>% 
+  group_by(pedon_ID, horizon, location) %>% # calculating means from replicates
+  summarise(mean_GWC = mean(GWC, na.rm = TRUE),
+            mean_HWC = mean(HWC, na.rm = TRUE)) 
+
+
+moisture_calculated_values_all<-left_join(moisture_calculated_values,moisture_calculated_values_new,by = c("horizon", "pedon_ID"))%>%
+  mutate(mean_GWC=coalesce(mean_GWC.x,mean_GWC.y),
+         mean_HWC=coalesce(mean_HWC.x,mean_HWC.y))%>%
+         rename(location=location.x)%>%
+  dplyr::select(!c(mean_GWC.x,mean_GWC.y,mean_HWC.x,mean_HWC.y,location.y))
+
+
+#write_rds(x = moisture_calculated_values_all, file = here("data/moisture_bulk_density.rds"))
+#write_csv(moisture_calculated_values_all, "moisture_bulk_density.csv")
 
 # Tidy pH and carbonate----
 
@@ -172,13 +204,15 @@ NPOC_volume <- 0.05 # extraction volume equals 50 mL
 calculated_MBC_DOC <- TOC_final_summary %>% 
   mutate(DOC_mg_g_wet = NPOC * NPOC_volume / unfum_weight,
          DN_mg_g_wet = TN * NPOC_volume / unfum_weight,
-         MBC_mg_g_wet = fum_NPOC * NPOC_volume / fum_weight,
-         MBN_mg_g_wet = fum_TN * NPOC_volume / fum_weight) %>% 
+         FumC_mg_g_wet = fum_NPOC * NPOC_volume / fum_weight,
+         FumN_mg_g_wet = fum_TN * NPOC_volume / fum_weight) %>% 
   group_by(pedon_ID, horizon) %>% 
-  summarize(mean_DOC_wet = mean(DOC_mg_g_wet),
-            mean_DN_wet = mean(DN_mg_g_wet),
-            mean_MBC_wet = mean(MBC_mg_g_wet),
-            mean_MBN_wet = mean(MBN_mg_g_wet))
+  dplyr::summarize(mean_DOC_wet = mean(DOC_mg_g_wet, na.rm = TRUE),
+            mean_DN_wet = mean(DN_mg_g_wet, na.rm = TRUE),
+            mean_FumC_wet = mean(FumC_mg_g_wet, na.rm = TRUE),
+            mean_FumN_wet = mean(FumN_mg_g_wet, na.rm = TRUE)) %>%
+  mutate(mean_MBC_mg_g_wet=mean_FumC_wet-mean_DOC_wet,
+         mean_MBN_mg_g_wet=mean_FumN_wet-mean_DN_wet)
 
 #write_rds(x = calculated_MBC_DOC, file = here("data/MBC_DOC.rds"))
 #write_csv(calculated_MBC_DOC, "MBC_DOC.csv")
@@ -189,7 +223,7 @@ calculated_MBC_DOC <- TOC_final_summary %>%
 
 CEC_tidy <- CEC %>% 
   left_join(moisture_calculated_values, by = c("horizon", "pedon_ID"))%>%
-  select(-c(mean_GWC, mean_HWC, mean_VWC, mean_db)) %>% 
+  dplyr::select(-c(mean_GWC, mean_HWC, mean_VWC, mean_db)) %>% 
   rename(CEC = Sum) 
 
 #write_rds(x = CEC_tidy, file = here("data/CEC.rds"))
@@ -200,8 +234,8 @@ CEC_tidy <- CEC %>%
 #joins moisture df for unique_ID
 
 particle_size_tidy <- particle_size %>% 
-  left_join(moisture_calculated_values, by = c("horizon", "pedon_ID"))%>%
-  select(-c(sample_num,mean_GWC, mean_HWC, mean_VWC, mean_db)) 
+  left_join(moisture_calculated_values_all, by = c("horizon", "pedon_ID"))%>%
+  dplyr::select(-c(sample_num,mean_GWC, mean_HWC, mean_VWC, mean_db)) 
 
 #write_rds(x = particle_size_tidy, file = here("data/mechanical_composition.rds"))
 #write_csv(particle_size_tidy, "mechanical_composition.csv")
@@ -210,9 +244,9 @@ particle_size_tidy <- particle_size %>%
 
 ph_carbonate_short <- dplyr::select(pH_carbonate_percent, 2,3, 6, 8)
 CN_short <- dplyr::select(calculated_bulk_CN, 2,3,5, 6, 15,16)
-HH_short <- dplyr::select(HH_calculated_values,  14,15, 16:20)
+HH_short <- dplyr::select(HH_calculated_values, 14,15, 16:20)
 size_short <- dplyr::select(size_fractions_calculated_values, 2,3, 17, 18,19)
-CEC_short <- dplyr::select(CEC_tidy,  1,2,3,5, 6, 7, 8, 9)
+CEC_short <- dplyr::select(CEC_tidy,  1,2,3,4,5, 6, 7, 8, 9)
 particle_short <- dplyr::select(particle_size_tidy,1, 2,3, 4, 5, 6, 7, 8)
 
 
@@ -220,20 +254,22 @@ particle_short <- dplyr::select(particle_size_tidy,1, 2,3, 4, 5, 6, 7, 8)
 
 # moisture dataframe has horizons
 
-joined_data <- left_join(all_pedon_meta_data, moisture_calculated_values, by = c("horizon", "pedon_ID"))%>%
-  select(-location.y)%>%  # drop column because names of sites are spelled differently and creates extra column
+joined_data <- left_join(all_pedon_meta_data, moisture_calculated_values_all, by = c("horizon", "pedon_ID"))%>%
+  dplyr::select(-location.y)%>%  # drop column because names of sites are spelled differently and creates extra column
   rename(location = location.x)
 joined_data <- left_join(joined_data, ph_carbonate_short,  by = c("horizon", "pedon_ID")) 
 joined_data <- left_join(joined_data, CN_short,  by = c("horizon", "pedon_ID")) 
 joined_data <- left_join(joined_data, HH_short,  by = c("horizon", "pedon_ID")) 
 joined_data <- left_join(joined_data, size_short,  by = c("horizon", "pedon_ID"))
 joined_data <- left_join(joined_data, CEC_short,  by = c("horizon", "pedon_ID"))%>%
-  select(-location.y)%>%  # drop column because names of sites are spelled differently and creates extra column
+  dplyr::select(-location.y)%>%  # drop column because names of sites are spelled differently and creates extra column
   rename(location = location.x)
 joined_data <- left_join(joined_data, calculated_MBC_DOC,  by = c("horizon", "pedon_ID"))
-joined_data <- left_join(joined_data, particle_short,  by = c("horizon", "pedon_ID")) %>% 
+joined_data <- left_join(joined_data, particle_short,  by = c("horizon", "pedon_ID"))
+joined_data <- left_join(joined_data, saturation,  by = c("horizon", "pedon_ID"))
+joined_data <- left_join(joined_data, cover,  by = c("pedon_ID"))%>%
   dplyr::select(pedon_ID, horizon, everything())%>%
-  select(-location.y)%>%  # drop column because names of sites are spelled differently and creates extra column
+  dplyr::select(-location.y)%>%  # drop column because names of sites are spelled differently and creates extra column
   rename(location = location.x)
 
 # normalizing variable to oven dry weight----
@@ -242,8 +278,8 @@ joined_data_moisture_corrected <- joined_data %>%
   #filter(horizon == c("a", "c")) %>% 
   mutate(DOC = mean_DOC_wet * (mean_GWC + 1),
          DN = mean_DN_wet * (mean_GWC + 1),
-         MBC = mean_MBC_wet * (mean_GWC + 1),
-         MBN = mean_MBN_wet * (mean_GWC + 1),
+         MBC = mean_MBC_mg_g_wet * (mean_GWC + 1),
+         MBN = mean_MBN_mg_g_wet * (mean_GWC + 1),
          SOC = SOC * (mean_HWC + 1),
          TN = TN * (mean_HWC + 1),
          IC = percent_carbonate * (mean_HWC + 1),
@@ -261,6 +297,25 @@ final_data <- joined_data_moisture_corrected %>%
          DN_N = DN / (TN / 100),
          HH_DOC_C = HH_DOC / (SOC / 100)) 
 
+
+# making a dataframe for the omics project
+# remove redundant metadata columns from metadata_dna csv file that was imported
+omics_tidy <- omics_soil_metadata %>% dplyr::select(!c(latitude,longitude,location_name,elevation_m,MAT_C,MAP_mm,region,aridity,soil_order,dominant_vegetation_class,biome,soil_moisture_regime,soil_temperature_regime,state,soil_series_name,series_extent_map_acres,common_vegetation,soil_family,project))
+
+# make pedonID numeric,  imported as character
+omics_tidy$pedon_ID <- as.numeric(omics_tidy$pedon_ID)
+
+# join with final data frame
+final_omics_data <- 
+  left_join(final_data, omics_tidy, by = c("pedon_ID", "horizon")) 
+
+#move seqID to first column
+final_data_natsoils<- final_omics_data %>%
+  dplyr::select(seqID, everything())
+
+#write as csv file
+#write_csv(final_data_natsoils,"./20210405_nationalsoils_semifinaldata.csv",na='')
+
 #write_rds(x = final_data, file = here("data/normalized_final_data.rds"))
-#write_csv(final_data, "final_data_national_soils.csv")
+
 ```
