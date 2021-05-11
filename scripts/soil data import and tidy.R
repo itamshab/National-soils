@@ -31,6 +31,14 @@ size_fractions <-
            col_types = 
              cols(horizon = col_factor(levels = c("a","c", "e"))))
 
+size_fractions_elements <- 
+  read_csv("./raw-data/Size fractions/size_fractions_elemental_isotopes.csv",
+           col_types = 
+             cols(horizon = col_factor(levels = c("a","c")),
+                  fraction = col_factor(levels = c("sand_pom", "silt_clay")))) %>% 
+  select(!(sample_ID))  
+  
+
 moisture <- 
   read_csv("./raw-data/Moisture/soil_moisture_raw_data.csv", 
            col_types = 
@@ -147,6 +155,8 @@ write_rds(x = pH_carbonate_percent, file = here("data/pH_carbonate.rds"))
 
 # silt and clay pan weight were added in excel to avoid NA's
 
+# pivot wider elemental and isotopes data
+
 size_fractions_calculated_values <- size_fractions %>% 
   mutate(coarse_fraction_g = sand_and_POM_and_pan_weight_g - sand_pom_pan_weight_g,
          fine_fraction_g = total_sc_and_pan_g - total_sc_pan_g,
@@ -156,6 +166,12 @@ size_fractions_calculated_values <- size_fractions %>%
          fine_coarse_ratio = relative_fine_fraction / relative_coarse_fraction)
 
 write_rds(x = size_fractions_calculated_values, file = here("data/size_fractions.rds"))
+
+size_fractions_elements_wide <- size_fractions_elements %>% 
+  pivot_wider(id_cols = c(soil, horizon, fraction), names_from = fraction, values_from = c(C, N, delta15N, delta13C)) %>% 
+  rename(pedon_ID = soil)
+
+write_rds(x = size_fractions_elements_wide, file = here("data/size_fractions_elemental_isotopes.rds"))
 
 
 # Tidy HH Extraction----
@@ -186,7 +202,9 @@ calculated_bulk_CN[c("mg_IC_g_soil_zero", "mg_IC_g_soil")][is.na(calculated_bulk
 
 calculated_bulk_CN <- calculated_bulk_CN %>% 
   mutate(SOC = percent_C - mg_IC_g_soil_zero*0.1) %>% 
-  mutate(TN = percent_N)  
+  mutate(TN = percent_N) %>% 
+  rename(delta13C_bulk = delta13C_vs_VPDB,
+         delta15N_bulk = delta15N_vs_at_air_air)
 
 write_rds(x = calculated_bulk_CN, file = here("data/bulk_CN.rds"))
 
@@ -254,6 +272,7 @@ joined_data <- left_join(joined_data, ph_carbonate_short)
 joined_data <- left_join(joined_data, CN_short) 
 joined_data <- left_join(joined_data, HH_short) 
 joined_data <- left_join(joined_data, size_short)
+joined_data <- left_join(joined_data, size_fractions_elements_wide, by = c("pedon_ID", "horizon"))
 joined_data <- left_join(joined_data, CEC_short)
 joined_data <- left_join(joined_data, calculated_MBC_DOC)
 joined_data <- left_join(joined_data, saturation) 
@@ -316,4 +335,3 @@ final_omics_data <- final_data %>%
   filter(seqID != "NA") 
 
 write_rds(final_omics_data, here("data/final_omics_data.rds"))
-
