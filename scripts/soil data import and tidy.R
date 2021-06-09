@@ -168,7 +168,9 @@ size_fractions_calculated_values <- size_fractions %>%
 write_rds(x = size_fractions_calculated_values, file = here("data/size_fractions.rds"))
 
 size_fractions_elements_wide <- size_fractions_elements %>% 
-  pivot_wider(id_cols = c(soil, horizon, fraction), names_from = fraction, values_from = c(C, N, delta15N, delta13C)) %>% 
+  pivot_wider(id_cols = c(soil, horizon, fraction), 
+              names_from = fraction, 
+              values_from = c(C, N, delta15N, delta13C)) %>% 
   rename(pedon_ID = soil)
 
 write_rds(x = size_fractions_elements_wide, file = here("data/size_fractions_elemental_isotopes.rds"))
@@ -283,9 +285,6 @@ joined_data <- left_join(joined_data, particle_short) %>%
 #joined_data <- read_csv(here("/data/joined_data.csv"))
 
 
-################################################################################
-########RUN THIS CHUNK AFTER ALL MOISTURE DATA COMPLETED########################
-################################################################################
 # normalizing variable to oven dry weight----
 
 joined_data_moisture_corrected <- joined_data %>% 
