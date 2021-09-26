@@ -36,8 +36,9 @@ size_fractions_elements <-
            col_types = 
              cols(horizon = col_factor(levels = c("a","c")),
                   fraction = col_factor(levels = c("sand_pom", "silt_clay")))) %>% 
-  select(!(sample_ID))  
-  
+  select(!(sample_ID)) %>% 
+  mutate(C = if_else(C < 0, 0, C))
+
 
 moisture <- 
   read_csv("./raw-data/Moisture/soil_moisture_raw_data.csv", 
